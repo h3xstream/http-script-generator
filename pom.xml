@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.h3xstream.scriptgen</groupId>
+    <artifactId>scriptgen-root-pom</artifactId>
+
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Script Generator (root pom.xml)</name>
+
+    <modules>
+        <module>scriptgen-core</module>
+        <module>scriptgen-zap-plugin</module>
+        <module>scriptgen-burp-plugin</module>
+        <module>burp-api</module>
+    </modules>
+
+    <properties>
+        <!-- Encoding configuration -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <build>
+
+        <plugins>
+            <!-- Force the use of Java 6 compiler -->
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+    <dependencyManagement>
+        <dependencies>
+
+            <!-- Sub modules versions -->
+
+            <dependency>
+                <groupId>com.h3xstream.scriptgen</groupId>
+                <artifactId>scriptgen-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h3xstream.scriptgen</groupId>
+                <artifactId>burp-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <!-- Rhino  use for its JS Parser -->
+
+            <dependency>
+                <groupId>org.mozilla</groupId>
+                <artifactId>rhino</artifactId>
+                <version>1.7R4</version>
+            </dependency>
+
+            <!-- ZAProxy -->
+
+            <dependency>
+                <groupId>org.zaproxy</groupId>
+                <artifactId>zaproxy</artifactId>
+                <version>2.2.2</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>net.htmlparser.jericho</groupId>
+                <artifactId>jericho-html</artifactId>
+                <version>3.1</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Log4J -->
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <!-- Paros HttpMessage expose HttpClient objects-->
+            <dependency>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
+                <version>3.1</version>
+                <scope>provided</scope>
+            </dependency>
+
+
+            <!-- Test dependencies -->
+
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.0</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-core</artifactId>
+                <version>1.2.1</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testng</groupId>
+                <artifactId>testng</artifactId>
+                <version>5.14.9</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.4</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+</project>
