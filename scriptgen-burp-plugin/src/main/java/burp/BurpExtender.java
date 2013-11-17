@@ -34,7 +34,6 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
         JMenuItem item = new JMenuItem(action);
         menuItems.add(item);
 
-
         return menuItems;
     }
 
