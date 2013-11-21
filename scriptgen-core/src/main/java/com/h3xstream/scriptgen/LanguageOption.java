@@ -4,11 +4,13 @@ import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
 public class LanguageOption {
 
+    private static final String BASE_TPL_CLASSPATH = "com/h3xstream/scriptgen/templates/";
+
     //List of script templates available
-    public static final LanguageOption PYTHON_REQUEST = new LanguageOption("Python (requests)", "", SyntaxConstants.SYNTAX_STYLE_PYTHON);
-    public static final LanguageOption RUBY_NET_HTTP = new LanguageOption("Ruby (Net::HTTP)", "", SyntaxConstants.SYNTAX_STYLE_RUBY);
-    public static final LanguageOption PERL_LWP = new LanguageOption("Perl (LWP)", "", SyntaxConstants.SYNTAX_STYLE_PERL);
-    public static final LanguageOption PHP_CURL = new LanguageOption("PHP (cURL)", "", SyntaxConstants.SYNTAX_STYLE_PHP);
+    public static final LanguageOption PYTHON_REQUEST = new LanguageOption("Python (requests)", BASE_TPL_CLASSPATH+"python_request.html", SyntaxConstants.SYNTAX_STYLE_PYTHON);
+    public static final LanguageOption RUBY_NET_HTTP = new LanguageOption("Ruby (Net::HTTP)", BASE_TPL_CLASSPATH+"ruby.html", SyntaxConstants.SYNTAX_STYLE_RUBY);
+    public static final LanguageOption PERL_LWP = new LanguageOption("Perl (LWP)", BASE_TPL_CLASSPATH+"", SyntaxConstants.SYNTAX_STYLE_PERL);
+    public static final LanguageOption PHP_CURL = new LanguageOption("PHP (cURL)", BASE_TPL_CLASSPATH+"", SyntaxConstants.SYNTAX_STYLE_PHP);
 
     public static final LanguageOption[] values = {PYTHON_REQUEST,RUBY_NET_HTTP,PERL_LWP,PHP_CURL};
 
