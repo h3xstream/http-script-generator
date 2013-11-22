@@ -2,5 +2,16 @@ import requests
 
 s = requests.Session()
 
-postParams = ''
-s.get('{{url}}', data=postParams)
+<#if req.parametersGet??>
+getParams = ${util.pythonDict(req.parametersGet)}
+</#if>
+<#if req.parametersPost??>
+postParams = ${util.pythonDict(req.parametersPost)}
+</#if>
+<#if req.headers??>
+headers = ${util.pythonDict(req.headers)}
+</#if>
+<#if req.cookies??>
+cookies = ${util.pythonDict(req.cookies)}
+</#if>
+s.${req.method?lower_case}("${util.pythonStr(req.url)}"<#if req.parametersPost??>, data=postParams</#if><#if req.parametersGet??>, params=getParams</#if><#if req.cookies??>, cookies=cookies</#if>)
