@@ -4,20 +4,28 @@ import java.util.Map;
 
 public class TemplateUtil {
 
-    public String pythonDict(Map<String,String> map) {
+
+
+    private String buildMap(Map<String,String> map,String start,String end,String separator) {
         StringBuilder buffer = new StringBuilder("{");
 
         int i=0;
         for(Map.Entry<String,String> e : map.entrySet()) {
             if(i++ != 0) buffer.append(",");
-            buffer.append("\""+ pythonStr(e.getKey()) + "\":\"" + pythonStr(e.getValue())+"\"");
+            buffer.append("\""+ pythonStr(e.getKey()) + "\""+separator+"\"" + pythonStr(e.getValue())+"\"");
         }
 
         buffer.append("}");
         return buffer.toString();
     }
 
-    public String pythonStr(String value) {
+    /**
+     * This method set the basic escaping for all scripting language.
+     * Each language will handle additional escaping if needed.
+     * @param value
+     * @return
+     */
+    private String genericString(String value) {
         StringBuilder buffer = new StringBuilder();
         for(int c=0;c<value.length();c++) {
             Character ch = value.charAt(c);
@@ -35,13 +43,39 @@ public class TemplateUtil {
                 buffer.append(ch);
             }
             else {
-                buffer.append("\\u"+String.format("%04x",Math.abs((int) ch)));
+                buffer.append("\\x"+String.format("%02x",Math.abs((int) ch)));
             }
-
-
-
         }
         return buffer.toString();
     }
 
+    ///Python util method
+
+    public String pythonDict(Map<String,String> map) {
+        return buildMap(map,"{","}",":");
+    }
+
+    public String pythonStr(String value) {
+        return genericString(value);
+    }
+
+    //Ruby
+
+    public String rubyMap(Map<String,String> map) {
+        return buildMap(map,"{","}","=>");
+    }
+
+    public String rubyStr(String value) {
+        return genericString(value);
+    }
+
+    //Perl
+
+    public String perlMap(Map<String,String> map) {
+        return buildMap(map,"{","}","=>");
+    }
+
+    public String perlStr(String value) {
+        return genericString(value);
+    }
 }

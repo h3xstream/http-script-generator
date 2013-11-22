@@ -18,11 +18,13 @@ public class ScriptGenerator {
 
     public JFrame openDialogWindow() {
         frame = new GeneratorFrame(LanguageOption.values, new LanguageSelectionChange());
+        frame.updateLanguageSelection(0);
         frame.setVisible(true);
         return frame;
     }
 
     private void update(GeneratorFrame frame, LanguageOption newOption) throws Exception {
+
 
         String codeGenerated = new CodeTemplateBuilder().request(req).templatePath(newOption.getTemplate()).build();
 
@@ -40,6 +42,7 @@ public class ScriptGenerator {
                 try {
                     update(ScriptGenerator.this.frame,(LanguageOption) obj);
                 } catch (Exception e1) {
+                    System.out.println(e1.getMessage());
                     //FIXME: Logging needed
                 }
             }

@@ -13,6 +13,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
     public static String CMB_LANGUAGE = "LANGUAGE_SELECTION";
 
     private RSyntaxTextArea codeTextArea;
+    private JComboBox listLanguages;
 
     public GeneratorFrame(OPTION[] options,ActionListener languageChangeListener) {
 
@@ -28,14 +29,14 @@ public class GeneratorFrame<OPTION> extends JFrame {
         setLocationRelativeTo(null);
     }
 
-    public void buildLanguageOptions(Container container, OPTION[] options,ActionListener languageChangeListener) {
-        JComboBox listLanguages = new JComboBox(options);
+    private void buildLanguageOptions(Container container, OPTION[] options,ActionListener languageChangeListener) {
+        listLanguages = new JComboBox(options);
         listLanguages.setName(CMB_LANGUAGE);
         listLanguages.addActionListener(languageChangeListener);
         container.add(listLanguages,BorderLayout.NORTH);
     }
 
-    public void buildCodeSection(Container container) {
+    private void buildCodeSection(Container container) {
 
         codeTextArea = new RSyntaxTextArea(20, 60);
         codeTextArea.setCodeFoldingEnabled(true);
@@ -52,6 +53,10 @@ public class GeneratorFrame<OPTION> extends JFrame {
 
         codeTextArea.setSyntaxEditingStyle(syntax);
         codeTextArea.setText(code);
+    }
+
+    public void updateLanguageSelection(int selectedIndex) {
+        listLanguages.setSelectedIndex(selectedIndex);
     }
 
 

@@ -8,7 +8,7 @@ public class CodeTemplateBuilderPythonTest {
 
     @Test
     public void testGetTemplate() throws Exception {
-        String tpl = "com/h3xstream/scriptgen/templates/python_requets.htm";
+        String tpl = "com/h3xstream/scriptgen/templates/python_requests.tpl";
         HttpRequestInfo req1 = HttpRequestInfoFixtures.getPostRequest();
 
         String output = new CodeTemplateBuilder().request(req1).templatePath(tpl).build();
