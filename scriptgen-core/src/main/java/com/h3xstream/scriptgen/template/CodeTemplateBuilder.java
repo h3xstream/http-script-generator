@@ -1,8 +1,5 @@
 package com.h3xstream.scriptgen.template;
 
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
 import com.h3xstream.scriptgen.HttpRequestInfo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;

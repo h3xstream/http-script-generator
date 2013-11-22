@@ -58,15 +58,6 @@
                 <version>${project.version}</version>
             </dependency>
 
-
-            <!-- Rhino  use for its JS Parser -->
-
-            <dependency>
-                <groupId>org.mozilla</groupId>
-                <artifactId>rhino</artifactId>
-                <version>1.7R4</version>
-            </dependency>
-
             <!-- ZAProxy -->
 
             <dependency>
@@ -76,9 +67,10 @@
                 <scope>provided</scope>
             </dependency>
 
+
             <dependency>
-                <groupId>net.htmlparser.jericho</groupId>
-                <artifactId>jericho-html</artifactId>
+                <groupId>commons-httpclient</groupId>
+                <artifactId>commons-httpclient</artifactId>
                 <version>3.1</version>
                 <scope>provided</scope>
             </dependency>
@@ -91,12 +83,17 @@
                 <scope>provided</scope>
             </dependency>
 
-            <!-- Paros HttpMessage expose HttpClient objects-->
             <dependency>
-                <groupId>commons-httpclient</groupId>
-                <artifactId>commons-httpclient</artifactId>
-                <version>3.1</version>
-                <scope>provided</scope>
+                <groupId>com.fifesoft</groupId>
+                <artifactId>rsyntaxtextarea</artifactId>
+                <version>2.5.0</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.20</version>
             </dependency>
 
 
@@ -130,27 +127,12 @@
                 <scope>test</scope>
             </dependency>
 
-
-
-            <dependency>
-                <groupId>com.fifesoft</groupId>
-                <artifactId>rsyntaxtextarea</artifactId>
-                <version>2.5.0</version>
-            </dependency>
-
             <dependency>
                 <groupId>org.easytesting</groupId>
                 <artifactId>fest-swing</artifactId>
                 <version>1.2.1</version>
                 <scope>test</scope>
             </dependency>
-
-            <dependency>
-                <groupId>org.freemarker</groupId>
-                <artifactId>freemarker</artifactId>
-                <version>2.3.20</version>
-            </dependency>
-
 
         </dependencies>
     </dependencyManagement>
