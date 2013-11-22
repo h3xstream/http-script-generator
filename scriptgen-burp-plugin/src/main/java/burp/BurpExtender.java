@@ -1,6 +1,8 @@
 package burp;
 
 
+import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.ScriptGenerator;
 import com.h3xstream.scriptgen.ScriptGeneratorConstants;
 
 import javax.swing.*;
@@ -13,7 +15,6 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
     private IBurpExtenderCallbacks callbacks;
     private IExtensionHelpers helpers;
 
-    private GenerateScriptAction action = new GenerateScriptAction();
 
     @Override
     public void registerExtenderCallbacks(IBurpExtenderCallbacks callbacks) {
@@ -29,22 +30,31 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
 
     @Override
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
+        IHttpRequestResponse[] responsesSelected = invocation.getSelectedMessages();
+
+        IRequestInfo requestInfo = helpers.analyzeRequest(responsesSelected[0].getHttpService(), responsesSelected[0].getRequest());
+
         List<JMenuItem> menuItems = new ArrayList<JMenuItem>();
 
-        JMenuItem item = new JMenuItem(action);
+        JMenuItem item = new JMenuItem(new GenerateScriptAction(requestInfo));
         menuItems.add(item);
 
         return menuItems;
     }
 
     private class GenerateScriptAction extends AbstractAction {
-        public GenerateScriptAction() {
+        private IRequestInfo requestInfo;
+        public GenerateScriptAction(IRequestInfo requestInfo) {
             super("Generate Script");
+            this.requestInfo = requestInfo;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(null, "Testing...");
+            //JOptionPane.showMessageDialog(null, "Testing...");
+
+            HttpRequestInfo req = BurpHttpRequestMapper.buildRequestInfo(requestInfo);
+            new ScriptGenerator(req).openDialogWindow();
         }
     }
 }

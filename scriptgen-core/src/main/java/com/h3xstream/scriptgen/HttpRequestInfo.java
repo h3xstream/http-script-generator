@@ -31,9 +31,18 @@ public class HttpRequestInfo {
     }
 
     private void extractHeaders() {
+
         for(Iterator<Map.Entry<String, String>> it = this.headers.entrySet().iterator(); it.hasNext(); ) {
+
             Map.Entry<String, String> entry = it.next();
             System.out.println(entry.getKey());
+
+            //Host
+            if(entry.getKey().toLowerCase().equals("host")) {
+                it.remove();
+            }
+
+            //Cookies
             if(entry.getKey().toLowerCase().equals("cookie")) {
                 String[] cookiesFound = entry.getValue().split(";");
                 for(String cook : cookiesFound) {

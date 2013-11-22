@@ -25,7 +25,6 @@ public class ScriptGenerator {
 
     private void update(GeneratorFrame frame, LanguageOption newOption) throws Exception {
 
-
         String codeGenerated = new CodeTemplateBuilder().request(req).templatePath(newOption.getTemplate()).build();
 
         frame.updateCode(codeGenerated,newOption.getSyntax());

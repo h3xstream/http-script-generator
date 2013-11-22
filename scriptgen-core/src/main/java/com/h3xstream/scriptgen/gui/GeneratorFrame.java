@@ -26,6 +26,8 @@ public class GeneratorFrame<OPTION> extends JFrame {
         setTitle(ScriptGeneratorConstants.PLUGIN_NAME);
 
         pack();
+        setSize(new Dimension(800,450));
+
         setLocationRelativeTo(null);
     }
 

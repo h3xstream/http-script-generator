@@ -1,6 +1,6 @@
 package org.zaproxy.zap.extension.scriptgen;
 
-import com.h3xstream.scriptwriter.ScriptWriterConstants;
+import com.h3xstream.scriptgen.ScriptGeneratorConstants;
 import org.parosproxy.paros.Constant;
 import org.parosproxy.paros.extension.ExtensionAdaptor;
 import org.parosproxy.paros.extension.ExtensionHook;
@@ -28,7 +28,7 @@ public class ScriptGeneratorMenuExtension extends ExtensionAdaptor {
 
     @Override
     public String getAuthor() {
-        return ScriptWriterConstants.AUTHOR;
+        return ScriptGeneratorConstants.AUTHOR;
     }
 
 
