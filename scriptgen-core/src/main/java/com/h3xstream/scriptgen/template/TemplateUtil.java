@@ -12,7 +12,7 @@ public class TemplateUtil {
         int i=0;
         for(Map.Entry<String,String> e : map.entrySet()) {
             if(i++ != 0) buffer.append(",");
-            buffer.append("\""+ pythonStr(e.getKey()) + "\""+separator+"\"" + pythonStr(e.getValue())+"\"");
+            buffer.append("\""+ pythonStr(e.getKey()) +separator + pythonStr(e.getValue())+"\"");
         }
 
         buffer.append("}");
@@ -72,10 +72,22 @@ public class TemplateUtil {
     //Perl
 
     public String perlMap(Map<String,String> map) {
-        return buildMap(map,"{","}","=>");
+        return buildMap(map,"{","}","\"=>\"");
     }
 
     public String perlStr(String value) {
         return genericString(value);
     }
+
+    //PHP
+
+    public String phpMap(Map<String,String> map) {
+        return buildMap(map,"array(",")","\"=>\"");
+    }
+
+    public String phpHeadersList(Map<String,String> map) {
+
+        return buildMap(map,"array(",")",": ");
+    }
+
 }

@@ -10,7 +10,7 @@ public class LanguageOption {
     public static final LanguageOption PYTHON_REQUEST = new LanguageOption("Python (requests)", BASE_TPL_CLASSPATH+"python_requests.tpl", SyntaxConstants.SYNTAX_STYLE_PYTHON);
     public static final LanguageOption RUBY_NET_HTTP = new LanguageOption("Ruby (Net::HTTP)", BASE_TPL_CLASSPATH+"ruby.tpl", SyntaxConstants.SYNTAX_STYLE_RUBY);
     public static final LanguageOption PERL_LWP = new LanguageOption("Perl (LWP)", BASE_TPL_CLASSPATH+"perl.tpl", SyntaxConstants.SYNTAX_STYLE_PERL);
-    public static final LanguageOption PHP_CURL = new LanguageOption("PHP (cURL)", BASE_TPL_CLASSPATH+"php.tpl", SyntaxConstants.SYNTAX_STYLE_PHP);
+    public static final LanguageOption PHP_CURL = new LanguageOption("PHP (cURL)", BASE_TPL_CLASSPATH+"php.tpl", SyntaxConstants.SYNTAX_STYLE_PERL);
 
     public static final LanguageOption[] values = {PYTHON_REQUEST,RUBY_NET_HTTP,PERL_LWP,PHP_CURL};
 

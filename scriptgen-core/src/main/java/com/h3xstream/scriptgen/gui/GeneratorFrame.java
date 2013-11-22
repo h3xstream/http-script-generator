@@ -41,7 +41,9 @@ public class GeneratorFrame<OPTION> extends JFrame {
     private void buildCodeSection(Container container) {
 
         codeTextArea = new RSyntaxTextArea(20, 60);
-        codeTextArea.setCodeFoldingEnabled(true);
+        codeTextArea.setCodeFoldingEnabled(false);
+        codeTextArea.setEditable(false);
+
         RTextScrollPane sp = new RTextScrollPane(codeTextArea);
         container.add(sp, BorderLayout.CENTER);
     }

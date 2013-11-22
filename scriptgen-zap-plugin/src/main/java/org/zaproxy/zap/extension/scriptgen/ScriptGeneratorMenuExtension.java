@@ -31,7 +31,6 @@ public class ScriptGeneratorMenuExtension extends ExtensionAdaptor {
         return ScriptGeneratorConstants.AUTHOR;
     }
 
-
     @Override
     public void hook(ExtensionHook extensionHook) {
         super.hook(extensionHook);
@@ -40,7 +39,6 @@ public class ScriptGeneratorMenuExtension extends ExtensionAdaptor {
             // Register our popup menu item, as long as we're not running as a daemon
             extensionHook.getHookMenu().addPopupMenuItem(getPopupMsgMenu());
         }
-
     }
 
     public String getMessage(String msgId) {
@@ -49,7 +47,7 @@ public class ScriptGeneratorMenuExtension extends ExtensionAdaptor {
 
     private ScriptGeneratorMenuAction getPopupMsgMenu() {
         if (menuItem == null) {
-            menuItem = new ScriptGeneratorMenuAction(getMessage("ext.scriptwriter.menu"));
+            menuItem = new ScriptGeneratorMenuAction(getMessage("ext.scriptgen.menu"));
             menuItem.setExtension(this);
         }
         return menuItem;

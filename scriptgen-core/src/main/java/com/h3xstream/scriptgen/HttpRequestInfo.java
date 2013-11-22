@@ -9,12 +9,12 @@ import java.util.Map;
  */
 public class HttpRequestInfo {
 
-    private final String method;
-    private final String url;
+    private String method;
+    private String url;
     private Map<String, String> parametersGet;
     private Map<String, String> parametersPost;
-    private final String postData;
-    private final Map<String, String> headers;
+    private String postData;
+    private Map<String, String> headers;
     private Map<String, String> cookies = new HashMap<String, String>();
 
     public HttpRequestInfo(String method, String url, Map<String, String> parametersGet, Map<String, String> parametersPost, Map<String, String> headers) {
@@ -26,8 +26,9 @@ public class HttpRequestInfo {
         this.headers = headers;
 
         extractHeaders();
-        if(parametersGet.size() == 0) this.parametersGet = null;
-        if(parametersPost.size() == 0) this.parametersPost = null;
+        if(this.parametersGet.size() == 0) this.parametersGet = null;
+        if(this.parametersPost.size() == 0) this.parametersPost = null;
+        if(this.headers.size() == 0) this.headers = null;
     }
 
     private void extractHeaders() {

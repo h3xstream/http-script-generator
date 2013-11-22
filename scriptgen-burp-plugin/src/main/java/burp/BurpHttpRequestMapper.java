@@ -9,7 +9,7 @@ import java.util.Map;
 public class BurpHttpRequestMapper {
     public static HttpRequestInfo buildRequestInfo(IRequestInfo requestInfo) {
         URL url = requestInfo.getUrl();
-        String urlWithoutQuery = url.getProtocol()+"://"+url.getHost()+"/"+url.getPath();
+        String urlWithoutQuery = url.getProtocol()+"://"+url.getHost()+url.getPath();
 
         //Build the map of parameters
         Map<String,String> paramsGet = new HashMap<String,String>();
@@ -33,7 +33,7 @@ public class BurpHttpRequestMapper {
 
             String[] headerParts = header.split(":",2);
             if(headerParts.length == 2) {
-                headers.put(headerParts[0], headerParts[1]);
+                headers.put(headerParts[0].trim(), headerParts[1].trim());
             }
         }
 

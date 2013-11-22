@@ -1,5 +1,7 @@
 package org.zaproxy.zap.extension.scriptgen;
 
+import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.ScriptGenerator;
 import org.parosproxy.paros.network.HttpMessage;
 import org.parosproxy.paros.view.View;
 import org.zaproxy.zap.view.PopupMenuHttpMessage;
@@ -13,8 +15,10 @@ public class ScriptGeneratorMenuAction extends PopupMenuHttpMessage {
     }
 
     @Override
-    public void performAction(HttpMessage paramHttpMessage) throws Exception {
-        View.getSingleton().showMessageDialog(extension.getMessage("ext.scriptwriter.test"));
+    public void performAction(HttpMessage httpMessage) throws Exception {
+        //View.getSingleton().showMessageDialog(extension.getMessage("ext.scriptgen.test"));
+        HttpRequestInfo req = ZapHttpRequestMapper.buildRequestInfo(httpMessage);
+        new ScriptGenerator(req).openDialogWindow();
     }
 
     @Override
