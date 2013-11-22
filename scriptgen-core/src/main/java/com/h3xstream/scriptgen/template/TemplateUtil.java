@@ -52,7 +52,7 @@ public class TemplateUtil {
     ///Python util method
 
     public String pythonDict(Map<String,String> map) {
-        return buildMap(map,"{","}",":");
+        return buildMap(map,"{","}","\":\"");
     }
 
     public String pythonStr(String value) {
@@ -62,7 +62,7 @@ public class TemplateUtil {
     //Ruby
 
     public String rubyMap(Map<String,String> map) {
-        return buildMap(map,"{","}","=>");
+        return buildMap(map,"{","}","\"=>\"");
     }
 
     public String rubyStr(String value) {
