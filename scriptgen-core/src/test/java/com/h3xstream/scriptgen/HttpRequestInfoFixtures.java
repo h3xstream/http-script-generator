@@ -23,12 +23,12 @@ public class HttpRequestInfoFixtures {
     }
 
     public static HttpRequestInfo getGetRequest() {
-        HttpRequestInfo req = new HttpRequestInfo("GET", "http://hack.me/injection", getParams, null, headers);
+        HttpRequestInfo req = new HttpRequestInfo("GET", "http://httpbin.org/get", getParams, null, headers);
         return req;
     }
 
     public static HttpRequestInfo getPostRequest() {
-        HttpRequestInfo req = new HttpRequestInfo("POST", "http://hack.me/injection", getParams, postParams, headers);
+        HttpRequestInfo req = new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, postParams, headers);
         return req;
     }
 }

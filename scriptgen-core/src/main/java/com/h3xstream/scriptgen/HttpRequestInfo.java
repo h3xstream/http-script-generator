@@ -26,9 +26,9 @@ public class HttpRequestInfo {
         this.headers = headers;
 
         extractHeaders();
-        if(this.parametersGet.size() == 0) this.parametersGet = null;
-        if(this.parametersPost.size() == 0) this.parametersPost = null;
-        if(this.headers.size() == 0) this.headers = null;
+        if(this.parametersGet != null && this.parametersGet.size() == 0) this.parametersGet = null;
+        if(this.parametersPost != null && this.parametersPost.size() == 0) this.parametersPost = null;
+        if(this.headers !=null && this.headers.size() == 0) this.headers = null;
     }
 
     private void extractHeaders() {

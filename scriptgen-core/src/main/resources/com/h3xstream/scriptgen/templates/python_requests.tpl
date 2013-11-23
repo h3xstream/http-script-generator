@@ -14,7 +14,7 @@ headers = ${util.pythonDict(req.headers)}
 <#if req.cookies??>
 cookies = ${util.pythonDict(req.cookies)}
 </#if>
-r = session.${req.method?lower_case}("${util.pythonStr(req.url)}"<#if req.parametersPost??>, data=paramsPost</#if><#if req.parametersGet??>, params=paramsGet</#if><#if req.cookies??>, cookies=cookies</#if>)
+response = session.${req.method?lower_case}("${util.pythonStr(req.url)}"<#if req.parametersPost??>, data=paramsPost</#if><#if req.parametersGet??>, params=paramsGet</#if><#if req.cookies??>, cookies=cookies</#if>)
 
-print "Status code:", r.status_code
-print "Response body:", r.text
+print "Status code:", response.status_code
+print "Response body:", response.text
