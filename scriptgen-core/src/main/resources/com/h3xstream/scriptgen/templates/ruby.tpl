@@ -11,7 +11,7 @@ http = Net::HTTP.new(uri.host, uri.port)
 request = Net::HTTP::${req.method?capitalize}.new(uri.request_uri)
 <#if req.headers??>
 <#list req.headers?keys as h>
-request["${util.rubyStr(h)}"] =  "${util.rubyStr(req.headers[h])}"
+request["${util.rubyStr(h)}"] = "${util.rubyStr(req.headers[h])}"
 </#list>
 </#if>
 <#if req.parametersPost??>

@@ -36,7 +36,7 @@ public class ScriptGenerator {
         public void actionPerformed(ActionEvent e) {
             JComboBox combo = (JComboBox) e.getSource();
             Object obj = combo.getSelectedItem();
-            System.out.println(obj.toString());
+            //System.out.println(obj.toString());
             if(obj instanceof LanguageOption) {
                 try {
                     update(ScriptGenerator.this.frame,(LanguageOption) obj);

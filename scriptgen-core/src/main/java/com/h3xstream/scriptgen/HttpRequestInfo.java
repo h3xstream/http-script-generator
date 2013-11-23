@@ -36,7 +36,6 @@ public class HttpRequestInfo {
         for(Iterator<Map.Entry<String, String>> it = this.headers.entrySet().iterator(); it.hasNext(); ) {
 
             Map.Entry<String, String> entry = it.next();
-            System.out.println(entry.getKey());
 
             //Host
             if(entry.getKey().toLowerCase().equals("host")) {
