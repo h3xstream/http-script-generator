@@ -4,18 +4,16 @@ import java.util.Map;
 
 public class TemplateUtil {
 
-
-
-    private String buildMap(Map<String,String> map,String start,String end,String separator) {
-        StringBuilder buffer = new StringBuilder("{");
+    private String buildMap(Map<String,String> map,String start,String end,String entrySeparator) {
+        StringBuilder buffer = new StringBuilder(start);
 
         int i=0;
         for(Map.Entry<String,String> e : map.entrySet()) {
             if(i++ != 0) buffer.append(",");
-            buffer.append("\""+ pythonStr(e.getKey()) +separator + pythonStr(e.getValue())+"\"");
+            buffer.append("\""+ pythonStr(e.getKey()) +entrySeparator + pythonStr(e.getValue())+"\"");
         }
 
-        buffer.append("}");
+        buffer.append(end);
         return buffer.toString();
     }
 
@@ -39,6 +37,9 @@ public class TemplateUtil {
             else if(ch == '"') {
                 buffer.append("\\\"");
             }
+            else if(ch == '\\') {
+                buffer.append("\\\\");
+            }
             else if( 32 <= ch && ch <= 126) { //Digits, alpha and most specials
                 buffer.append(ch);
             }
@@ -48,6 +49,7 @@ public class TemplateUtil {
         }
         return buffer.toString();
     }
+
 
     ///Python util method
 
@@ -81,6 +83,10 @@ public class TemplateUtil {
 
     //PHP
 
+    public String phpStr(String value) {
+        return genericString(value);
+    }
+
     public String phpMap(Map<String,String> map) {
         return buildMap(map,"array(",")","\"=>\"");
     }
@@ -90,4 +96,16 @@ public class TemplateUtil {
         return buildMap(map,"array(",")",": ");
     }
 
+    public String phpUrlEncode(String value) {
+        return "urlencode(\""+phpStr(value)+"\")"; //FIXME: Make urlencode() optionnal if all ascii
+    }
+
+    public String phpCookies(Map<String,String> cookies) {
+        StringBuilder str = new StringBuilder();
+        int i=0;
+        for(Map.Entry<String,String> e : cookies.entrySet()) {
+            str.append((i++!=0?"; ":"")+e.getKey()+"="+e.getValue());
+        }
+        return str.toString();
+    }
 }

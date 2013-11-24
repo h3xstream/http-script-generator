@@ -13,7 +13,7 @@ public class HttpRequestInfoFixtures {
     static Map<String, String> postParams = new HashMap<String, String>();
     static {
         postParams.put("username", "admin");
-        postParams.put("password", "admin");
+        postParams.put("password", "admin'--**\n\\");
     }
     static Map<String, String> headers = new HashMap<String, String>();
     static {
