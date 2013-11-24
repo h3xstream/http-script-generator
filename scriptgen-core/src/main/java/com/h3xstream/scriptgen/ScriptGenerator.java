@@ -1,51 +1,47 @@
 package com.h3xstream.scriptgen;
 
 import com.h3xstream.scriptgen.gui.GeneratorFrame;
-import com.h3xstream.scriptgen.template.CodeTemplateBuilder;
+import com.h3xstream.scriptgen.gui.HttpRequestModel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
+
 
 public class ScriptGenerator {
     private HttpRequestInfo req;
     private GeneratorFrame frame;
 
+    private HttpRequestModel controller;
+
     public ScriptGenerator(HttpRequestInfo req) {
         this.req = req;
+
+        this.controller = new HttpRequestModel();
+        this.frame = new GeneratorFrame(LanguageOption.values);
+    }
+
+    /**
+     * Constructor intend for testing purpose.
+     * @param req
+     * @param controller
+     * @param frame
+     */
+    public ScriptGenerator(HttpRequestInfo req,HttpRequestModel controller,GeneratorFrame frame) {
+        this.req = req;
+
+        this.controller = controller;
+        this.frame = frame;
     }
 
     public JFrame openDialogWindow() {
-        frame = new GeneratorFrame(LanguageOption.values, new LanguageSelectionChange());
-        frame.updateLanguageSelection(0);
-        frame.setTitleSuffix(req.getUrl());
-        frame.setVisible(true);
+        this.controller.updateHttpRequest(req);
+
+        this.frame.setController(controller); //Controller need to be set prior setting
+        this.frame.setTitleSuffix(req.getUrl());
+        this.frame.setVisible(true);
+        this.frame.updateLanguageSelection(0);
         return frame;
     }
 
-    private void update(GeneratorFrame frame, LanguageOption newOption) throws Exception {
 
-        String codeGenerated = new CodeTemplateBuilder().request(req).templatePath(newOption.getTemplate()).build();
 
-        frame.updateCode(codeGenerated,newOption.getSyntax());
-    }
-
-    private class LanguageSelectionChange implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JComboBox combo = (JComboBox) e.getSource();
-            Object obj = combo.getSelectedItem();
-            //System.out.println(obj.toString());
-            if(obj instanceof LanguageOption) {
-                try {
-                    update(ScriptGenerator.this.frame,(LanguageOption) obj);
-                } catch (Exception e1) {
-                    System.out.println(e1.getMessage());
-                    //FIXME: Logging needed
-                }
-            }
-        }
-    }
 }

@@ -2,6 +2,9 @@ package com.h3xstream.scriptgen;
 
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
 
+/**
+ * This class can be seen as an Enum. It contains all the languages supported.
+ */
 public class LanguageOption {
 
     private static final String BASE_TPL_CLASSPATH = "com/h3xstream/scriptgen/templates/";

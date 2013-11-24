@@ -7,7 +7,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * This POJO permit abstraction from the initiator (Burp proxy or ZAP)
+ * This class represent the model of an HTTP request.
+ * The views (templates) will make reference to this POJO.
+ * <p>
+ * NOTE: This POJO permit abstraction from the initiator (Burp proxy or ZAP).
  */
 public class HttpRequestInfo {
 

@@ -2,7 +2,7 @@
 $url = "${req.url}";
 
 <#if req.parametersPost??>
-$paramsPost="";
+$paramsPost = "";
 <#list req.parametersPost?keys as p>
 $paramsPost .= ${util.phpUrlEncode(p)}.'='.${util.phpUrlEncode(req.parametersPost[p])}<#if p_has_next>.'&'</#if>;
 </#list>

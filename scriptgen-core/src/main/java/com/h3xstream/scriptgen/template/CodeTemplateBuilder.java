@@ -9,6 +9,9 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This utility class is a wrapper of the template engine chosen (FreeMarker).
+ */
 public class CodeTemplateBuilder {
 
     private HttpRequestInfo request;
@@ -25,25 +28,6 @@ public class CodeTemplateBuilder {
     }
 
     public String build() throws Exception {
-/*
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-
-        MustacheFactory mf = new DefaultMustacheFactory();
-
-
-        InputStream in = CodeTemplateBuilder.class.getResourceAsStream(templatePath);
-        if(in == null) {
-            throw new FileNotFoundException(templatePath);
-        }
-
-        Reader r = new InputStreamReader(in);
-        Mustache mustache = mf.compile(r,"");
-        Object[] scopes = {request,new TemplateUtil()};
-        mustache.execute(new PrintWriter(out),scopes).flush();
-
-        return new String(out.toByteArray(),"UTF-8");
-
-        */
 
         Configuration cfg = new Configuration();
         cfg.setClassForTemplateLoading(this.getClass(), "/");

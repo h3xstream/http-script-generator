@@ -4,10 +4,10 @@ import com.h3xstream.scriptgen.HttpRequestInfo;
 import com.h3xstream.scriptgen.HttpRequestInfoFixtures;
 import com.h3xstream.scriptgen.ScriptGenerator;
 
-public class GeneratorFrameTestManual {
+public class GeneratorFrameTestManualGetRequest {
 
     public static void main(String[] args) {
-        HttpRequestInfo req = HttpRequestInfoFixtures.getPostRequest();
+        HttpRequestInfo req = HttpRequestInfoFixtures.getGetRequest();
         new ScriptGenerator(req).openDialogWindow();
     }
 }

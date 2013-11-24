@@ -1,16 +1,22 @@
 package com.h3xstream.scriptgen.gui;
 
+import com.h3xstream.scriptgen.LanguageOption;
 import com.h3xstream.scriptgen.ScriptGeneratorConstants;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * This class build the main window containing the code snippet generated.
+ * @param <OPTION>
+ */
 public class GeneratorFrame<OPTION> extends JFrame {
 
     public static String CMB_LANGUAGE = "LANGUAGE_SELECTION";
@@ -28,28 +34,39 @@ public class GeneratorFrame<OPTION> extends JFrame {
 
     private RSyntaxTextArea codeTextArea;
     private JComboBox listLanguages;
+    private HttpRequestModel controller;
 
-    public GeneratorFrame(OPTION[] options,ActionListener languageChangeListener) {
+    public GeneratorFrame(OPTION[] options) {
 
         Container cont = this.getContentPane();
         cont.setLayout(new BorderLayout());
 
-        buildLanguageOptions(cont, options, languageChangeListener);
-        buildCodeSection(cont);
+        //Building the window one part at the time
+        buildLanguageOptions(cont, options, new LanguageSelectionChange()); //North
+        buildCodeSection(cont); //Center
         changeIcon();
-
         setTitle(ScriptGeneratorConstants.PLUGIN_NAME);
 
+        //Resizing
         pack();
         setSize(new Dimension(800,450));
 
+        //position
         setLocationRelativeTo(null);
+        centerWindow(this);
     }
 
     private void changeIcon() {
         if(icon != null) {
             this.setIconImage(icon.getImage());
         }
+    }
+
+    private void centerWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
     }
 
     private void buildLanguageOptions(Container container, OPTION[] options,ActionListener languageChangeListener) {
@@ -92,6 +109,10 @@ public class GeneratorFrame<OPTION> extends JFrame {
         setTitle(ScriptGeneratorConstants.PLUGIN_NAME+" - "+info);
     }
 
+    public void setController(HttpRequestModel controller) {
+        this.controller = controller;
+    }
+
     private static byte[] inputStreamtToBytes(InputStream is) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -104,6 +125,25 @@ public class GeneratorFrame<OPTION> extends JFrame {
         buffer.flush();
 
         return buffer.toByteArray();
+    }
+
+
+    private class LanguageSelectionChange implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JComboBox combo = (JComboBox) e.getSource();
+            Object obj = combo.getSelectedItem();
+            //System.out.println(obj.toString());
+            if(obj instanceof LanguageOption) {
+                try {
+                    controller.updateLanguage(GeneratorFrame.this, (LanguageOption) obj);
+                } catch (Exception e1) {
+                    System.out.println(e1.getMessage());
+                    //FIXME: Logging needed
+                }
+            }
+        }
     }
 
 }
