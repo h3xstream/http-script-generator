@@ -1,5 +1,7 @@
 package com.h3xstream.scriptgen;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -11,6 +13,7 @@ public class HttpRequestInfo {
 
     private String method;
     private String url;
+    private String hostname;
     private Map<String, String> parametersGet;
     private Map<String, String> parametersPost;
     private String postData;
@@ -20,6 +23,11 @@ public class HttpRequestInfo {
     public HttpRequestInfo(String method, String url, Map<String, String> parametersGet, Map<String, String> parametersPost, Map<String, String> headers) {
         this.method = method;
         this.url = url;
+        try {
+            this.hostname = new URL(this.url).getHost();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
         this.parametersGet = parametersGet;
         this.parametersPost = parametersPost;
         this.postData = null;
@@ -64,6 +72,10 @@ public class HttpRequestInfo {
         return url;
     }
 
+    public String getHostname() {
+        return hostname;
+    }
+
     public Map<String, String> getParametersGet() {
         return parametersGet;
     }
@@ -83,4 +95,5 @@ public class HttpRequestInfo {
     public Map<String, String> getCookies() {
         return cookies;
     }
+
 }

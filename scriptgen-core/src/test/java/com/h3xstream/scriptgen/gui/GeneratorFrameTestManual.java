@@ -7,7 +7,7 @@ import com.h3xstream.scriptgen.ScriptGenerator;
 public class GeneratorFrameTestManual {
 
     public static void main(String[] args) {
-        HttpRequestInfo req = HttpRequestInfoFixtures.getPostRequest();
+        HttpRequestInfo req = HttpRequestInfoFixtures.getGetRequest();
         new ScriptGenerator(req).openDialogWindow();
     }
 }

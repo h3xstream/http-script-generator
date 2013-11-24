@@ -7,3 +7,4 @@ curl_setopt($req, CURLOPT_POSTFIELDS, ${util.phpMap(req.parametersPost)});
 <#if req.headers??>
 curl_setopt($req, CURLOPT_HTTPHEADER, ${util.phpHeadersList(req.headers)});
 </#if>
+
