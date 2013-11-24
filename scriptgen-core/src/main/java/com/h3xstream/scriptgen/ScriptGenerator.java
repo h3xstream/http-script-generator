@@ -19,6 +19,7 @@ public class ScriptGenerator {
     public JFrame openDialogWindow() {
         frame = new GeneratorFrame(LanguageOption.values, new LanguageSelectionChange());
         frame.updateLanguageSelection(0);
+        frame.setTitleSuffix(req.getUrl());
         frame.setVisible(true);
         return frame;
     }

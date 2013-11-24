@@ -80,8 +80,16 @@ public class GeneratorFrame<OPTION> extends JFrame {
         codeTextArea.setText(code);
     }
 
+    /**
+     * Force the selection of a language
+     * @param selectedIndex
+     */
     public void updateLanguageSelection(int selectedIndex) {
         listLanguages.setSelectedIndex(selectedIndex);
+    }
+
+    public void setTitleSuffix(String info) {
+        setTitle(ScriptGeneratorConstants.PLUGIN_NAME+" - "+info);
     }
 
     private static byte[] inputStreamtToBytes(InputStream is) throws IOException {

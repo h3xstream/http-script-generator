@@ -3,8 +3,7 @@ require "uri"
 
 uri = URI.parse("${req.url}")
 <#if req.parametersGet??>
-paramsGet = ${util.rubyMap(req.parametersGet)}
-uri.query = URI.encode_www_form(paramsGet)
+uri.query = URI.encode_www_form(${util.rubyMap(req.parametersGet)})
 </#if>
 http = Net::HTTP.new(uri.host, uri.port)
 
