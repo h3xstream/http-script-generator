@@ -1,7 +1,7 @@
 package com.h3xstream.scriptgen;
 
+import com.h3xstream.scriptgen.gui.GeneratorController;
 import com.h3xstream.scriptgen.gui.GeneratorFrame;
-import com.h3xstream.scriptgen.gui.HttpRequestModel;
 
 import javax.swing.*;
 
@@ -10,12 +10,12 @@ public class ScriptGenerator {
     private HttpRequestInfo req;
     private GeneratorFrame frame;
 
-    private HttpRequestModel controller;
+    private GeneratorController controller;
 
     public ScriptGenerator(HttpRequestInfo req) {
         this.req = req;
 
-        this.controller = new HttpRequestModel();
+        this.controller = new GeneratorController();
         this.frame = new GeneratorFrame(LanguageOption.values);
     }
 
@@ -25,7 +25,7 @@ public class ScriptGenerator {
      * @param controller
      * @param frame
      */
-    public ScriptGenerator(HttpRequestInfo req,HttpRequestModel controller,GeneratorFrame frame) {
+    public ScriptGenerator(HttpRequestInfo req,GeneratorController controller,GeneratorFrame frame) {
         this.req = req;
 
         this.controller = controller;

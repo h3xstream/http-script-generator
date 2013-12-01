@@ -4,7 +4,8 @@ import com.h3xstream.scriptgen.HttpRequestInfo;
 import com.h3xstream.scriptgen.LanguageOption;
 import com.h3xstream.scriptgen.template.CodeTemplateBuilder;
 
-public class HttpRequestModel {
+
+public class GeneratorController {
     HttpRequestInfo request;
 
     public void updateHttpRequest(HttpRequestInfo request) {

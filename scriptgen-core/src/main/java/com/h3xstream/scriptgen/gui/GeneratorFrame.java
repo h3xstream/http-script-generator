@@ -34,7 +34,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
 
     private RSyntaxTextArea codeTextArea;
     private JComboBox listLanguages;
-    private HttpRequestModel controller;
+    private GeneratorController controller;
 
     public GeneratorFrame(OPTION[] options) {
 
@@ -109,7 +109,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
         setTitle(ScriptGeneratorConstants.PLUGIN_NAME+" - "+info);
     }
 
-    public void setController(HttpRequestModel controller) {
+    public void setController(GeneratorController controller) {
         this.controller = controller;
     }
 

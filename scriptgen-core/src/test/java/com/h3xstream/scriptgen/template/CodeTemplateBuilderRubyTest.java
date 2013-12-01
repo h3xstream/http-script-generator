@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertTrue;
 
-public class CodeTemplateBuilderPythonTest extends CodeTemplateBuilderBaseTest {
+public class CodeTemplateBuilderRubyTest extends CodeTemplateBuilderBaseTest {
 
 
     HttpRequestInfo reqGet = HttpRequestInfoFixtures.getGetRequest();
@@ -14,11 +14,11 @@ public class CodeTemplateBuilderPythonTest extends CodeTemplateBuilderBaseTest {
 
     @Test
     public void testGetTemplate() throws Exception {
-        testTemplateContains("com/h3xstream/scriptgen/templates/python_requests.tpl","session.get(",reqGet);
+        testTemplateContains("com/h3xstream/scriptgen/templates/ruby_nethttp.tpl","Net::HTTP::Get",reqGet);
     }
 
     @Test
     public void testPostTemplate() throws Exception {
-        testTemplateContains("com/h3xstream/scriptgen/templates/python_requests.tpl","session.post(",reqPost);
+        testTemplateContains("com/h3xstream/scriptgen/templates/ruby_nethttp.tpl","Net::HTTP::Post",reqPost);
     }
 }

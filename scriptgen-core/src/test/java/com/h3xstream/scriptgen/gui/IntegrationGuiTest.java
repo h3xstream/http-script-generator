@@ -1,7 +1,11 @@
-package com.h3xstream.scriptgen;
+package com.h3xstream.scriptgen.gui;
 
+import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.HttpRequestInfoFixtures;
+import com.h3xstream.scriptgen.LanguageOption;
+import com.h3xstream.scriptgen.ScriptGenerator;
+import com.h3xstream.scriptgen.gui.GeneratorController;
 import com.h3xstream.scriptgen.gui.GeneratorFrame;
-import com.h3xstream.scriptgen.gui.HttpRequestModel;
 import org.fest.swing.fixture.FrameFixture;
 import org.mockito.Matchers;
 import org.testng.annotations.Test;
@@ -10,16 +14,16 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
-public class GeneratorFrameSelectionFestTest {
+public class IntegrationGuiTest {
 
     FrameFixture window;
 
-    HttpRequestModel controller;
+    GeneratorController controller;
     GeneratorFrame frame;
 
     public void prepareWindow() {
         //Spy version to do verification on calls
-        controller = spy(new HttpRequestModel());
+        controller = spy(new GeneratorController());
         frame = new GeneratorFrame(LanguageOption.values);
 
         HttpRequestInfo req = HttpRequestInfoFixtures.getPostRequest();

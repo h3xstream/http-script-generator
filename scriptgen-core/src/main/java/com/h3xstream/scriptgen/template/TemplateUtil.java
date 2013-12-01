@@ -97,7 +97,13 @@ public class TemplateUtil {
     }
 
     public String phpUrlEncode(String value) {
-        return "urlencode(\""+phpStr(value)+"\")"; //FIXME: Make urlencode() optionnal if all ascii
+        boolean containsSpecials = false;
+        for(int i=0;i<value.length();i++) {
+            if(!(Character.isAlphabetic(value.charAt(i)) || Character.isDigit(value.charAt(i)))) {
+                containsSpecials = true;
+            }
+        }
+        return containsSpecials? "urlencode(\""+phpStr(value)+"\")":"\""+phpStr(value)+"\"";
     }
 
     public String phpCookies(Map<String,String> cookies) {

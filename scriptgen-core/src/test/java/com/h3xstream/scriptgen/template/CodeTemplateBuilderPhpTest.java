@@ -4,9 +4,7 @@ import com.h3xstream.scriptgen.HttpRequestInfo;
 import com.h3xstream.scriptgen.HttpRequestInfoFixtures;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
-
-public class CodeTemplateBuilderPythonTest extends CodeTemplateBuilderBaseTest {
+public class CodeTemplateBuilderPhpTest  extends CodeTemplateBuilderBaseTest {
 
 
     HttpRequestInfo reqGet = HttpRequestInfoFixtures.getGetRequest();
@@ -14,11 +12,11 @@ public class CodeTemplateBuilderPythonTest extends CodeTemplateBuilderBaseTest {
 
     @Test
     public void testGetTemplate() throws Exception {
-        testTemplateContains("com/h3xstream/scriptgen/templates/python_requests.tpl","session.get(",reqGet);
+        testTemplateContains("com/h3xstream/scriptgen/templates/php_curl.tpl","<?php",reqGet);
     }
 
     @Test
     public void testPostTemplate() throws Exception {
-        testTemplateContains("com/h3xstream/scriptgen/templates/python_requests.tpl","session.post(",reqPost);
+        testTemplateContains("com/h3xstream/scriptgen/templates/php_curl.tpl","CURLOPT_POSTFIELDS",reqPost);
     }
 }
