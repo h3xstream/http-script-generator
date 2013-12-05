@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,12 +23,12 @@ public class ZapHttpRequestMapper {
 
         Map<String,String> paramsGet = new HashMap<String,String>();
         for(HtmlParameter param : httpMessage.getUrlParams()) {
-            paramsGet.put(param.getName(), param.getValue());
+            paramsGet.put(URLDecoder.decode(param.getName(), "UTF-8"), URLDecoder.decode(param.getValue(), "UTF-8"));
         }
 
         Map<String,String> paramsPost = new HashMap<String, String>();
         for(HtmlParameter param : httpMessage.getFormParams()) {
-            paramsGet.put(param.getName(), param.getValue());
+            paramsGet.put(URLDecoder.decode(param.getName(), "UTF-8"), URLDecoder.decode(param.getValue(),"UTF-8"));
         }
 
         Map<String,String> headers = new HashMap<String, String>();
@@ -37,7 +38,7 @@ public class ZapHttpRequestMapper {
         while((headerLine = br.readLine()) != null) {
             String[] headerParts = headerLine.split(":", 2);
             if (headerParts.length == 2) {
-                headers.put(headerParts[0].trim(), headerParts[1].trim());
+                headers.put(headerParts[0].trim(), URLDecoder.decode(headerParts[1].trim(),"UTF-8"));
             }
         }
 
