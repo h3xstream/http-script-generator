@@ -53,6 +53,11 @@ public class HttpRequestInfo {
                 it.remove();
             }
 
+            //Content-Length
+            if(entry.getKey().toLowerCase().equals("content-length")) { //Compute automatically by the HTTP clients
+                it.remove();
+            }
+
             //Cookies
             if(entry.getKey().toLowerCase().equals("cookie")) {
                 String[] cookiesFound = entry.getValue().split(";");
