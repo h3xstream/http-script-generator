@@ -20,6 +20,9 @@ my $ua = LWP::UserAgent->new();
 <#if req.cookies??>
 $ua->cookie_jar($cookies);
 </#if>
+<#if req.basicAuth??>
+$ua->credentials("${util.perlStr(req.hostname)}", "realm-name", '${util.perlStr(req.basicAuth.username)}', '${util.perlStr(req.basicAuth.password)}');
+</#if>
 
 <#if req.parametersPost??>
 my $req = POST $url<#if req.parametersPost??>, ${util.perlMap(req.parametersPost)}</#if>;
@@ -30,6 +33,9 @@ my $req = ${req.method?upper_case} $url;
 <#list req.headers?keys as h>
 $req->header("${util.perlStr(h)}" => "${util.perlStr(req.headers[h])}");
 </#list>
+</#if>
+<#if req.postData??>
+$req->content("${util.perlStr(req.postData)}");
 </#if>
 my $resp = $ua->request($req);
 

@@ -1,6 +1,6 @@
 package com.h3xstream.scriptgen.template;
 
-import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import com.h3xstream.scriptgen.HttpRequestInfoFixtures;
 import org.testng.annotations.Test;
 

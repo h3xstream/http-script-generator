@@ -54,6 +54,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
         //position
         setLocationRelativeTo(null);
         centerWindow(this);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private void changeIcon() {

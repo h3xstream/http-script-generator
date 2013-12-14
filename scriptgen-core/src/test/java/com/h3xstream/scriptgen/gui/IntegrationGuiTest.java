@@ -1,11 +1,9 @@
 package com.h3xstream.scriptgen.gui;
 
-import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import com.h3xstream.scriptgen.HttpRequestInfoFixtures;
 import com.h3xstream.scriptgen.LanguageOption;
 import com.h3xstream.scriptgen.ScriptGenerator;
-import com.h3xstream.scriptgen.gui.GeneratorController;
-import com.h3xstream.scriptgen.gui.GeneratorFrame;
 import org.fest.swing.fixture.FrameFixture;
 import org.mockito.Matchers;
 import org.testng.annotations.Test;

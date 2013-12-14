@@ -1,5 +1,6 @@
-package com.h3xstream.scriptgen;
+package com.h3xstream.scriptgen.model;
 
+import javax.xml.bind.DatatypeConverter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -23,7 +24,10 @@ public class HttpRequestInfo {
     private Map<String, String> headers;
     private Map<String, String> cookies = new HashMap<String, String>();
 
-    public HttpRequestInfo(String method, String url, Map<String, String> parametersGet, Map<String, String> parametersPost, Map<String, String> headers) {
+    private AuthCredential basicAuth;
+    //private AuthCredential digestAuth;
+
+    public HttpRequestInfo(String method, String url, Map<String, String> parametersGet, Map<String, String> parametersPost, String postData, Map<String, String> headers) {
         this.method = method;
         this.url = url;
         try {
@@ -33,13 +37,13 @@ public class HttpRequestInfo {
         }
         this.parametersGet = parametersGet;
         this.parametersPost = parametersPost;
-        this.postData = null;
+        this.postData = postData;
         this.headers = headers;
 
         extractHeaders();
         if(this.parametersGet != null && this.parametersGet.size() == 0) this.parametersGet = null;
         if(this.parametersPost != null && this.parametersPost.size() == 0) this.parametersPost = null;
-        if(this.headers !=null && this.headers.size() == 0) this.headers = null;
+        if(this.headers != null && this.headers.size() == 0) this.headers = null;
     }
 
     private void extractHeaders() {
@@ -66,6 +70,25 @@ public class HttpRequestInfo {
                     cookies.put(cookieParts[0].trim(),cookieParts[1].trim());
                 }
                 it.remove();
+            }
+
+            //Authentication
+            if(entry.getKey().toLowerCase().equals("authorization")) {
+                String[] valueParts = entry.getValue().split(" ",2);
+                if(valueParts.length != 2) continue;
+
+                //Basic authentication
+                if(valueParts[0].toLowerCase().equals("basic")) {
+                    try {
+                        String creds = new String(DatatypeConverter.parseBase64Binary(valueParts[1]));
+                        String[] credsParts = creds.split(":");
+                        basicAuth = new AuthCredential(credsParts[0],credsParts[1]);
+                        it.remove();
+                    }
+                    catch (IllegalArgumentException e){
+                        continue; //Header will stay unchanged
+                    }
+                }
             }
         }
 
@@ -104,4 +127,7 @@ public class HttpRequestInfo {
         return cookies;
     }
 
+    public AuthCredential getBasicAuth() {
+        return basicAuth;
+    }
 }

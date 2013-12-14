@@ -1,5 +1,7 @@
 package com.h3xstream.scriptgen;
 
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,12 +25,12 @@ public class HttpRequestInfoFixtures {
     }
 
     public static HttpRequestInfo getGetRequest() {
-        HttpRequestInfo req = new HttpRequestInfo("GET", "http://httpbin.org/get", getParams, null, headers);
+        HttpRequestInfo req = new HttpRequestInfo("GET", "http://httpbin.org/get", getParams, null, null, headers);
         return req;
     }
 
     public static HttpRequestInfo getPostRequest() {
-        HttpRequestInfo req = new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, postParams, headers);
+        HttpRequestInfo req = new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, postParams, null, headers);
         return req;
     }
 }

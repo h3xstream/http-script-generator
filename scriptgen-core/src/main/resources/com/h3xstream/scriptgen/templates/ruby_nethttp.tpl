@@ -16,6 +16,12 @@ request["${util.rubyStr(h)}"] = "${util.rubyStr(req.headers[h])}"
 <#if req.parametersPost??>
 request.set_form_data(${util.rubyMap(req.parametersPost)})
 </#if>
+<#if req.postData??>
+request.body = "${util.rubyStr(req.postData)}"
+</#if>
+<#if req.basicAuth??>
+request.basic_auth("${util.rubyStr(req.basicAuth.username)}","${util.rubyStr(req.basicAuth.password)}")
+</#if>
 response = http.request(request)
 
 puts "Status code: "+response.code

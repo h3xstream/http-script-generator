@@ -1,9 +1,8 @@
 package com.h3xstream.scriptgen.template;
 
-import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
 
 import java.io.*;
 import java.util.HashMap;

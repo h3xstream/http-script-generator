@@ -1,8 +1,7 @@
 package org.zaproxy.zap.extension.scriptgen;
 
-import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import org.apache.commons.httpclient.URI;
-import org.apache.commons.httpclient.URIException;
 import org.parosproxy.paros.network.HtmlParameter;
 import org.parosproxy.paros.network.HttpMessage;
 
@@ -19,7 +18,11 @@ public class ZapHttpRequestMapper {
     public static HttpRequestInfo buildRequestInfo(HttpMessage httpMessage) throws IOException {
         String method = httpMessage.getRequestHeader().getMethod();
         URI url = httpMessage.getRequestHeader().getURI();
-        String urlWithoutQuery = url.getScheme()+"://"+url.getHost()+url.getPath();
+        boolean isDefaultPort = url.getPort() == -1;
+
+        String urlWithoutQuery = url.getScheme()+ "://"+url.getHost()+ //
+                (isDefaultPort ? "": ":"+url.getPort())+ //
+                url.getPath();
 
         Map<String,String> paramsGet = new HashMap<String,String>();
         for(HtmlParameter param : httpMessage.getUrlParams()) {
@@ -28,7 +31,14 @@ public class ZapHttpRequestMapper {
 
         Map<String,String> paramsPost = new HashMap<String, String>();
         for(HtmlParameter param : httpMessage.getFormParams()) {
-            paramsGet.put(URLDecoder.decode(param.getName(), "UTF-8"), URLDecoder.decode(param.getValue(),"UTF-8"));
+            paramsPost.put(URLDecoder.decode(param.getName(), "UTF-8"), URLDecoder.decode(param.getValue(),"UTF-8"));
+        }
+
+        String postData = null;
+        String requestBody = new String(httpMessage.getRequestBody().getBytes());
+        if(requestBody.indexOf("=") == -1) { //No "=" is found in the body
+            postData = requestBody;
+            paramsPost = new HashMap<String, String>(); //Empty the post parameters
         }
 
         Map<String,String> headers = new HashMap<String, String>();
@@ -42,6 +52,6 @@ public class ZapHttpRequestMapper {
             }
         }
 
-        return new HttpRequestInfo(method,urlWithoutQuery,paramsGet,paramsPost,headers);
+        return new HttpRequestInfo(method,urlWithoutQuery,paramsGet,paramsPost,postData,headers);
     }
 }

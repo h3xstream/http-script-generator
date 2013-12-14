@@ -1,7 +1,8 @@
 package burp;
 
-import com.h3xstream.scriptgen.HttpRequestInfo;
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
 
+import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -9,9 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BurpHttpRequestMapper {
-    public static HttpRequestInfo buildRequestInfo(IRequestInfo requestInfo) {
+    public static HttpRequestInfo buildRequestInfo(IRequestInfo requestInfo,byte[] responseBytes) {
         URL url = requestInfo.getUrl();
-        String urlWithoutQuery = url.getProtocol() + "://" + url.getHost() + url.getPath();
+        boolean isDefaultPort = url.getPort() == -1;
+
+        String urlWithoutQuery = url.getProtocol()+ "://"+url.getHost()+ //
+                (isDefaultPort ? "": ":"+url.getPort())+ //
+                url.getPath();
 
         //Build the map of parameters
         Map<String, String> paramsGet = new HashMap<String, String>();
@@ -31,6 +36,10 @@ public class BurpHttpRequestMapper {
             }
         }
 
+        //POST data
+        byte[] requestBodyBytes = new byte[responseBytes.length - requestInfo.getBodyOffset()];
+        System.arraycopy(responseBytes, requestInfo.getBodyOffset(), requestBodyBytes, 0, responseBytes.length - requestInfo.getBodyOffset());
+
         //Headers
         Map<String, String> headers = new HashMap<String, String>();
 
@@ -44,6 +53,6 @@ public class BurpHttpRequestMapper {
             }
         }
 
-        return new HttpRequestInfo(requestInfo.getMethod(), urlWithoutQuery, paramsGet, paramsPost, headers);
+        return new HttpRequestInfo(requestInfo.getMethod(), urlWithoutQuery, paramsGet, paramsPost, new String(requestBodyBytes), headers);
     }
 }

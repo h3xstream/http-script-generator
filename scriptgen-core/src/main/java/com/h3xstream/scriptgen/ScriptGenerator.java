@@ -2,6 +2,7 @@ package com.h3xstream.scriptgen;
 
 import com.h3xstream.scriptgen.gui.GeneratorController;
 import com.h3xstream.scriptgen.gui.GeneratorFrame;
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
 
 import javax.swing.*;
 
