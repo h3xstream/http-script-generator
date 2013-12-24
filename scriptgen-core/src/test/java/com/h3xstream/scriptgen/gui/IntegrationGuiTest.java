@@ -6,7 +6,12 @@ import com.h3xstream.scriptgen.LanguageOption;
 import com.h3xstream.scriptgen.ScriptGenerator;
 import org.fest.swing.fixture.FrameFixture;
 import org.mockito.Matchers;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import java.awt.event.KeyEvent;
+import java.io.File;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -19,6 +24,7 @@ public class IntegrationGuiTest {
     GeneratorController controller;
     GeneratorFrame frame;
 
+
     public void prepareWindow() {
         //Spy version to do verification on calls
         controller = spy(new GeneratorController());
@@ -28,6 +34,17 @@ public class IntegrationGuiTest {
         ScriptGenerator scriptGen = new ScriptGenerator(req,controller,frame);
         window = new FrameFixture(scriptGen.openDialogWindow());
         window.show();
+    }
+
+
+    @BeforeClass
+    public void beforeClass() {
+        prepareWindow();
+    }
+
+    @AfterClass
+    public void afterClass() {
+        window.close();
     }
 
 
@@ -43,8 +60,6 @@ public class IntegrationGuiTest {
     @Test
     public void languageSelectionChange() throws Exception {
 
-        prepareWindow();
-
         reset(controller);//Avoid counting the initialisation to the first language (Python)
 
         window.comboBox(GeneratorFrame.CMB_LANGUAGE).selectItem(1);
@@ -54,10 +69,51 @@ public class IntegrationGuiTest {
         verify(controller,times(1)).updateLanguage(Matchers.<GeneratorFrame>any(), eq(LanguageOption.PERL_LWP));
 
         window.comboBox(GeneratorFrame.CMB_LANGUAGE).selectItem(3);
-        verify(controller,times(1)).updateLanguage(Matchers.<GeneratorFrame>any(), eq(LanguageOption.PERL_LWP));
+        verify(controller,times(1)).updateLanguage(Matchers.<GeneratorFrame>any(), eq(LanguageOption.PHP_CURL));
 
         window.comboBox(GeneratorFrame.CMB_LANGUAGE).selectItem(0);
         verify(controller,times(1)).updateLanguage(Matchers.<GeneratorFrame>any(), eq(LanguageOption.PYTHON_REQUEST));
 
+    }
+
+
+    //The save operations
+
+    @Test
+    public void testSendToCopyPaste() {
+
+        //1. Directly jump on copy to clipboard button
+        window.button(GeneratorFrame.BUTTON_COPY).click();
+
+        verify(controller).copyToClipboard(anyString());
+    }
+
+    @Test
+    public void testSendToCopyPasteAfterLanguageSelectionChange() throws Exception {
+
+        reset(controller);//Avoid counting the initialisation to the first language (Python)
+
+        //1. Select Perl language
+        window.comboBox(GeneratorFrame.CMB_LANGUAGE).selectItem(2);
+        verify(controller,times(1)).updateLanguage(Matchers.<GeneratorFrame>any(), eq(LanguageOption.PERL_LWP));
+
+        //2. Press copy to clipboard button
+        window.button(GeneratorFrame.BUTTON_COPY).click();
+
+        verify(controller).copyToClipboard(contains("use LWP::UserAgent;"));
+    }
+
+    @Test
+    public void testSaveToFile() {
+
+        //1. Directly save the script to file
+        window.button(GeneratorFrame.BUTTON_SAVE).click();
+        window.fileChooser(ScriptFileChooser.FILE_CHOOSER).fileNameTextBox().enterText("somescript").pressKey(KeyEvent.VK_ENTER);
+
+        verify(controller).fileSaveSuccess(endsWith("somescript"));
+
+        //Cleanup
+        String currentDirectory = new File(".").getAbsolutePath();
+        new File(currentDirectory,"somescript").delete();
     }
 }
