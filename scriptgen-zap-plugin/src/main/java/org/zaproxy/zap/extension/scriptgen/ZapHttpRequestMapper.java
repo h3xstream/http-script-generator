@@ -39,6 +39,9 @@ public class ZapHttpRequestMapper {
         if(requestBody.indexOf("=") == -1) { //No "=" is found in the body
             postData = requestBody;
             paramsPost = new HashMap<String, String>(); //Empty the post parameters
+            if("".equals(postData)) {
+                postData = null;
+            }
         }
 
         Map<String,String> headers = new HashMap<String, String>();
