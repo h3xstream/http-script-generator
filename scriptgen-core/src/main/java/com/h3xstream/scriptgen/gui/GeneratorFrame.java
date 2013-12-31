@@ -3,6 +3,7 @@ package com.h3xstream.scriptgen.gui;
 import com.h3xstream.scriptgen.LanguageOption;
 import com.h3xstream.scriptgen.ScriptGeneratorConstants;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
@@ -84,11 +85,24 @@ public class GeneratorFrame<OPTION> extends JFrame {
     private void buildCodeSection(Container container) {
 
         codeTextArea = new RSyntaxTextArea(20, 60);
-        codeTextArea.setCodeFoldingEnabled(false);
+        //codeTextArea.setCodeFoldingEnabled(false);
+        Theme t = loadDarkTheme();
+        if(t != null) //Theme was load
+            t.apply(codeTextArea);
         codeTextArea.setEditable(false);
 
         RTextScrollPane sp = new RTextScrollPane(codeTextArea);
         container.add(sp, BorderLayout.CENTER);
+    }
+
+    private Theme loadDarkTheme() {
+        try {
+            InputStream in = getClass().getResourceAsStream("/com/h3xstream/scriptgen/themes/dark.xml");
+            return Theme.load(in);
+        }
+        catch(Exception e) {
+            return null;
+        }
     }
 
     private void buildSaveOptions(Container container) {
