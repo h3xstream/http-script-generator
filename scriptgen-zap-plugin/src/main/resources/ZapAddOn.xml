@@ -1,6 +1,6 @@
 <zapaddon>
     <name>Script Generator</name>
-    <version>1</version>
+    <version>2</version>
     <description>Generate script to reproduce the HTTP request selected.</description>
     <author>Philippe Arteau (h3xStream)</author>
     <url>https://github.com/h3xstream/http-script-generator</url>

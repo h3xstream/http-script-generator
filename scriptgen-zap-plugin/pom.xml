@@ -34,7 +34,7 @@
                             <descriptorRefs>
                                 <descriptorRef>jar-with-dependencies</descriptorRef>
                             </descriptorRefs>
-                            <finalName>scriptgen-alpha-1</finalName>
+                            <finalName>scriptgen-alpha-2</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <addMavenDescriptor>false</addMavenDescriptor>

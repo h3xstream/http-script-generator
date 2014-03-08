@@ -3,6 +3,7 @@ package com.h3xstream.scriptgen.gui;
 import com.h3xstream.scriptgen.LanguageOption;
 import com.h3xstream.scriptgen.ScriptGeneratorConstants;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
@@ -19,6 +20,9 @@ import java.io.InputStream;
  */
 public class GeneratorFrame<OPTION> extends JFrame {
 
+    //Components name refer in unit tests
+    public static final String BUTTON_COPY = "BUTTON_COPY";
+    public static final String BUTTON_SAVE = "BUTTON_SAVE";
     public static String CMB_LANGUAGE = "LANGUAGE_SELECTION";
 
     public static ImageIcon icon;
@@ -26,7 +30,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
         InputStream iconStream = GeneratorFrame.class.getResourceAsStream("/com/h3xstream/scriptgen/images/script_text.png");
 
         try {
-            icon = new ImageIcon(inputStreamtToBytes(iconStream));
+            icon = new ImageIcon(inputStreamToBytes(iconStream));
         } catch (IOException e) {
             System.err.println("Script icon could not be load..");
         }
@@ -44,6 +48,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
         //Building the window one part at the time
         buildLanguageOptions(cont, options, new LanguageSelectionChange()); //North
         buildCodeSection(cont); //Center
+        buildSaveOptions(cont);
         changeIcon();
         setTitle(ScriptGeneratorConstants.PLUGIN_NAME);
 
@@ -80,11 +85,42 @@ public class GeneratorFrame<OPTION> extends JFrame {
     private void buildCodeSection(Container container) {
 
         codeTextArea = new RSyntaxTextArea(20, 60);
-        codeTextArea.setCodeFoldingEnabled(false);
+        //codeTextArea.setCodeFoldingEnabled(false);
+        Theme t = loadDarkTheme();
+        if(t != null) //Theme was load
+            t.apply(codeTextArea);
         codeTextArea.setEditable(false);
 
         RTextScrollPane sp = new RTextScrollPane(codeTextArea);
         container.add(sp, BorderLayout.CENTER);
+    }
+
+    private Theme loadDarkTheme() {
+        try {
+            InputStream in = getClass().getResourceAsStream("/com/h3xstream/scriptgen/themes/dark.xml");
+            return Theme.load(in);
+        }
+        catch(Exception e) {
+            return null;
+        }
+    }
+
+    private void buildSaveOptions(Container container) {
+
+
+        JPanel buttonContainer = new JPanel(new FlowLayout());
+
+        JButton buttonCopy = new JButton("Copy to clipboard");
+        buttonCopy.setName(BUTTON_COPY);
+        JButton buttonSave = new JButton("Save to file");
+        buttonSave.setName(BUTTON_SAVE);
+        buttonCopy.addActionListener(new CopyScriptToClipboard());
+        buttonSave.addActionListener(new SaveScriptToFile());
+
+        buttonContainer.add(buttonCopy);
+        buttonContainer.add(buttonSave);
+
+        container.add(buttonContainer,BorderLayout.SOUTH);
     }
 
     /**
@@ -114,7 +150,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
         this.controller = controller;
     }
 
-    private static byte[] inputStreamtToBytes(InputStream is) throws IOException {
+    private static byte[] inputStreamToBytes(InputStream is) throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
         int nRead;
@@ -134,17 +170,37 @@ public class GeneratorFrame<OPTION> extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             JComboBox combo = (JComboBox) e.getSource();
-            Object obj = combo.getSelectedItem();
+            Object langSelected = combo.getSelectedItem();
             //System.out.println(obj.toString());
-            if(obj instanceof LanguageOption) {
+            if(langSelected instanceof LanguageOption) {
                 try {
-                    controller.updateLanguage(GeneratorFrame.this, (LanguageOption) obj);
+                    controller.updateLanguage(GeneratorFrame.this, (LanguageOption) langSelected);
                 } catch (Exception e1) {
-                    System.out.println(e1.getMessage());
+                    System.err.println(e1.getMessage());
                     //FIXME: Logging needed
                 }
             }
         }
     }
 
+
+    private class CopyScriptToClipboard implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            controller.copyToClipboard(codeTextArea.getText());
+        }
+    }
+
+    private class SaveScriptToFile implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Object langSelected = listLanguages.getSelectedItem();
+            //System.out.println(obj.toString());
+            if(langSelected instanceof LanguageOption) {
+                controller.saveScriptToFile(codeTextArea.getText(),(LanguageOption) langSelected,GeneratorFrame.this);
+            }
+        }
+    }
 }

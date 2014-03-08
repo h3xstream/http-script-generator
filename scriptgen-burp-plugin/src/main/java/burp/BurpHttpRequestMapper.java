@@ -10,12 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BurpHttpRequestMapper {
-    public static HttpRequestInfo buildRequestInfo(IRequestInfo requestInfo,byte[] responseBytes) {
+    public static HttpRequestInfo buildRequestInfo(IRequestInfo requestInfo, byte[] responseBytes) {
         URL url = requestInfo.getUrl();
-        boolean isDefaultPort = url.getPort() == -1;
+        boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getProtocol().equals("https"));
 
-        String urlWithoutQuery = url.getProtocol()+ "://"+url.getHost()+ //
-                (isDefaultPort ? "": ":"+url.getPort())+ //
+        String urlWithoutQuery = url.getProtocol() + "://" + url.getHost() + //
+                (isDefaultPort ? "" : ":" + url.getPort()) + //
                 url.getPath();
 
         //Build the map of parameters
@@ -39,6 +39,18 @@ public class BurpHttpRequestMapper {
         //POST data
         byte[] requestBodyBytes = new byte[responseBytes.length - requestInfo.getBodyOffset()];
         System.arraycopy(responseBytes, requestInfo.getBodyOffset(), requestBodyBytes, 0, responseBytes.length - requestInfo.getBodyOffset());
+        String requestBodyString = new String(requestBodyBytes);
+        if (requestBodyString.indexOf("=") == -1) {
+            //In the case of RAW body (json, binary, etc.)
+            paramsPost = new HashMap<String, String>();
+            if("".equals(requestBodyString)) {
+                requestBodyString = null;
+            }
+
+        }
+        else {
+            requestBodyString = null;
+        }
 
         //Headers
         Map<String, String> headers = new HashMap<String, String>();
@@ -53,6 +65,7 @@ public class BurpHttpRequestMapper {
             }
         }
 
-        return new HttpRequestInfo(requestInfo.getMethod(), urlWithoutQuery, paramsGet, paramsPost, new String(requestBodyBytes), headers);
+        return new HttpRequestInfo(requestInfo.getMethod(), urlWithoutQuery, paramsGet, paramsPost, requestBodyString,
+                headers);
     }
 }
