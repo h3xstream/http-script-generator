@@ -14,8 +14,8 @@ my $cookies = HTTP::Cookies->new();
 <#list req.cookies?keys as c>
 $cookies->set_cookie(0,"${util.perlStr(c)}", "${util.perlStr(req.cookies[c])}","/","${util.perlStr(req.hostname)}");
 </#list>
-</#if>
 
+</#if>
 my $ua = LWP::UserAgent->new();
 <#if req.cookies??>
 $ua->cookie_jar($cookies);
