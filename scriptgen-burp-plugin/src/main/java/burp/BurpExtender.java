@@ -1,9 +1,9 @@
 package burp;
 
 
+import com.h3xstream.scriptgen.ReissueRequestScripterConstants;
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
-import com.h3xstream.scriptgen.ScriptGenerator;
-import com.h3xstream.scriptgen.ScriptGeneratorConstants;
+import com.h3xstream.scriptgen.ReissueRequestScripter;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -24,7 +24,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
         //Register context menu
         callbacks.registerContextMenuFactory(this);
 
-        callbacks.setExtensionName(ScriptGeneratorConstants.PLUGIN_NAME);
+        callbacks.setExtensionName(ReissueRequestScripterConstants.PLUGIN_NAME);
     }
 
 
@@ -57,7 +57,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
             //JOptionPane.showMessageDialog(null, "Testing...");
 
             HttpRequestInfo req = BurpHttpRequestMapper.buildRequestInfo(requestInfo,requestBytes);
-            new ScriptGenerator(req).openDialogWindow();
+            new ReissueRequestScripter(req).openDialogWindow();
         }
     }
 }

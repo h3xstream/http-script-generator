@@ -12,7 +12,7 @@
 
     <artifactId>scriptgen-zap-plugin</artifactId>
 
-    <name>Script Generator (Zed Attack Proxy Plugin)</name>
+    <name>Reissue Request Scripter (Zed Attack Proxy Plugin)</name>
 
     <packaging>jar</packaging>
 

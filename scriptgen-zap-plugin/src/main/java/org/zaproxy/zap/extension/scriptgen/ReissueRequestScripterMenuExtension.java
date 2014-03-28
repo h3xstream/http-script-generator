@@ -1,24 +1,24 @@
 package org.zaproxy.zap.extension.scriptgen;
 
-import com.h3xstream.scriptgen.ScriptGeneratorConstants;
+import com.h3xstream.scriptgen.ReissueRequestScripterConstants;
 import org.parosproxy.paros.Constant;
 import org.parosproxy.paros.extension.ExtensionAdaptor;
 import org.parosproxy.paros.extension.ExtensionHook;
 
 import java.util.ResourceBundle;
 
-public class ScriptGeneratorMenuExtension extends ExtensionAdaptor {
+public class ReissueRequestScripterMenuExtension extends ExtensionAdaptor {
 
-    private ScriptGeneratorMenuAction menuItem;
+    private ReissueRequestScripterMenuAction menuItem;
     private ResourceBundle messages = null;
 
 
-    public ScriptGeneratorMenuExtension(String msg) {
+    public ReissueRequestScripterMenuExtension(String msg) {
         super(msg);
         initExtension();
     }
 
-    public ScriptGeneratorMenuExtension() {
+    public ReissueRequestScripterMenuExtension() {
         initExtension();
     }
 
@@ -28,7 +28,7 @@ public class ScriptGeneratorMenuExtension extends ExtensionAdaptor {
 
     @Override
     public String getAuthor() {
-        return ScriptGeneratorConstants.AUTHOR;
+        return ReissueRequestScripterConstants.AUTHOR;
     }
 
     @Override
@@ -45,9 +45,9 @@ public class ScriptGeneratorMenuExtension extends ExtensionAdaptor {
         return messages.getString(msgId);
     }
 
-    private ScriptGeneratorMenuAction getPopupMsgMenu() {
+    private ReissueRequestScripterMenuAction getPopupMsgMenu() {
         if (menuItem == null) {
-            menuItem = new ScriptGeneratorMenuAction(getMessage("ext.scriptgen.menu"));
+            menuItem = new ReissueRequestScripterMenuAction(getMessage("ext.scriptgen.menu"));
             menuItem.setExtension(this);
         }
         return menuItem;

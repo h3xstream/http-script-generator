@@ -1,9 +1,9 @@
 package com.h3xstream.scriptgen.gui;
 
+import com.h3xstream.scriptgen.ReissueRequestScripter;
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import com.h3xstream.scriptgen.HttpRequestInfoFixtures;
 import com.h3xstream.scriptgen.LanguageOption;
-import com.h3xstream.scriptgen.ScriptGenerator;
 import org.fest.swing.fixture.FrameFixture;
 import org.mockito.Matchers;
 import org.testng.annotations.AfterClass;
@@ -31,7 +31,7 @@ public class IntegrationGuiTest {
         frame = new GeneratorFrame(LanguageOption.values);
 
         HttpRequestInfo req = HttpRequestInfoFixtures.getPostRequest();
-        ScriptGenerator scriptGen = new ScriptGenerator(req,controller,frame);
+        ReissueRequestScripter scriptGen = new ReissueRequestScripter(req,controller,frame);
         window = new FrameFixture(scriptGen.openDialogWindow());
         window.show();
     }

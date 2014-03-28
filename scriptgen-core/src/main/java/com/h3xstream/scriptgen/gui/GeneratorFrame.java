@@ -1,7 +1,7 @@
 package com.h3xstream.scriptgen.gui;
 
 import com.h3xstream.scriptgen.LanguageOption;
-import com.h3xstream.scriptgen.ScriptGeneratorConstants;
+import com.h3xstream.scriptgen.ReissueRequestScripterConstants;
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.Theme;
 import org.fife.ui.rtextarea.RTextScrollPane;
@@ -50,7 +50,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
         buildCodeSection(cont); //Center
         buildSaveOptions(cont);
         changeIcon();
-        setTitle(ScriptGeneratorConstants.PLUGIN_NAME);
+        setTitle(ReissueRequestScripterConstants.PLUGIN_NAME);
 
         //Resizing
         pack();
@@ -143,7 +143,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
     }
 
     public void setTitleSuffix(String info) {
-        setTitle(ScriptGeneratorConstants.PLUGIN_NAME+" - "+info);
+        setTitle(ReissueRequestScripterConstants.PLUGIN_NAME+" - "+info);
     }
 
     public void setController(GeneratorController controller) {

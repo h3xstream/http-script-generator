@@ -12,7 +12,7 @@
 
     <artifactId>scriptgen-burp-plugin</artifactId>
 
-    <name>Script Generator (Burp Proxy Plugin)</name>
+    <name>Reissue Request Scripter (Burp Proxy Plugin)</name>
 
     <packaging>jar</packaging>
 

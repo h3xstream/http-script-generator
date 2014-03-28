@@ -7,13 +7,13 @@ import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import javax.swing.*;
 
 
-public class ScriptGenerator {
+public class ReissueRequestScripter {
     private HttpRequestInfo req;
     private GeneratorFrame frame;
 
     private GeneratorController controller;
 
-    public ScriptGenerator(HttpRequestInfo req) {
+    public ReissueRequestScripter(HttpRequestInfo req) {
         this.req = req;
 
         this.controller = new GeneratorController();
@@ -26,7 +26,7 @@ public class ScriptGenerator {
      * @param controller
      * @param frame
      */
-    public ScriptGenerator(HttpRequestInfo req,GeneratorController controller,GeneratorFrame frame) {
+    public ReissueRequestScripter(HttpRequestInfo req, GeneratorController controller, GeneratorFrame frame) {
         this.req = req;
 
         this.controller = controller;

@@ -1,5 +1,5 @@
 <zapaddon>
-    <name>Script Generator</name>
+    <name>Reissue Request Scripter</name>
     <version>2</version>
     <description>Generate script to reproduce the HTTP request selected.</description>
     <author>Philippe Arteau (h3xStream)</author>

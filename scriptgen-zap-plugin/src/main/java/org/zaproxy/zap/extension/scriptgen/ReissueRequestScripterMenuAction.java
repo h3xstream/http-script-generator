@@ -1,15 +1,15 @@
 package org.zaproxy.zap.extension.scriptgen;
 
+import com.h3xstream.scriptgen.ReissueRequestScripter;
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
-import com.h3xstream.scriptgen.ScriptGenerator;
 import org.parosproxy.paros.network.HttpMessage;
 import org.zaproxy.zap.view.PopupMenuHttpMessage;
 
-public class ScriptGeneratorMenuAction extends PopupMenuHttpMessage {
+public class ReissueRequestScripterMenuAction extends PopupMenuHttpMessage {
 
-    private ScriptGeneratorMenuExtension extension;
+    private ReissueRequestScripterMenuExtension extension;
 
-    public ScriptGeneratorMenuAction(String label) {
+    public ReissueRequestScripterMenuAction(String label) {
         super(label);
     }
 
@@ -17,7 +17,7 @@ public class ScriptGeneratorMenuAction extends PopupMenuHttpMessage {
     public void performAction(HttpMessage httpMessage) throws Exception {
         //View.getSingleton().showMessageDialog(extension.getMessage("ext.scriptgen.test"));
         HttpRequestInfo req = ZapHttpRequestMapper.buildRequestInfo(httpMessage);
-        new ScriptGenerator(req).openDialogWindow();
+        new ReissueRequestScripter(req).openDialogWindow();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class ScriptGeneratorMenuAction extends PopupMenuHttpMessage {
         return true;
     }
 
-    public void setExtension(ScriptGeneratorMenuExtension extension) {
+    public void setExtension(ReissueRequestScripterMenuExtension extension) {
         this.extension = extension;
     }
 }
