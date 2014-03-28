@@ -18,7 +18,7 @@ public class ZapHttpRequestMapper {
     public static HttpRequestInfo buildRequestInfo(HttpMessage httpMessage) throws IOException {
         String method = httpMessage.getRequestHeader().getMethod();
         URI url = httpMessage.getRequestHeader().getURI();
-        boolean isDefaultPort = url.getPort() == -1;
+        boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getScheme().equals("https")) || (url.getPort() == 80 && url.getScheme().equals("http"));
 
         String urlWithoutQuery = url.getScheme()+ "://"+url.getHost()+ //
                 (isDefaultPort ? "": ":"+url.getPort())+ //

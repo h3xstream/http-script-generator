@@ -12,7 +12,7 @@ import java.util.Map;
 public class BurpHttpRequestMapper {
     public static HttpRequestInfo buildRequestInfo(IRequestInfo requestInfo, byte[] responseBytes) {
         URL url = requestInfo.getUrl();
-        boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getProtocol().equals("https"));
+        boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getProtocol().equals("https")) || (url.getPort() == 80 && url.getProtocol().equals("http"));
 
         String urlWithoutQuery = url.getProtocol() + "://" + url.getHost() + //
                 (isDefaultPort ? "" : ":" + url.getPort()) + //

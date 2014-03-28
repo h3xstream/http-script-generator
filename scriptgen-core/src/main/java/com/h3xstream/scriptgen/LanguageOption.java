@@ -10,7 +10,7 @@ public class LanguageOption {
     private static final String BASE_TPL_CLASSPATH = "com/h3xstream/scriptgen/templates/";
 
     //List of script templates available
-    public static final LanguageOption PYTHON_REQUEST = new LanguageOption("Python (requests)", "python", BASE_TPL_CLASSPATH + "python_requests.tpl", SyntaxConstants.SYNTAX_STYLE_PYTHON, "py");
+    public static final LanguageOption PYTHON_REQUEST = new LanguageOption("Python (Requests)", "python", BASE_TPL_CLASSPATH + "python_requests.tpl", SyntaxConstants.SYNTAX_STYLE_PYTHON, "py");
     public static final LanguageOption RUBY_NET_HTTP = new LanguageOption("Ruby (Net::HTTP)", "ruby", BASE_TPL_CLASSPATH + "ruby_nethttp.tpl", SyntaxConstants.SYNTAX_STYLE_RUBY , "rb");
     public static final LanguageOption PERL_LWP = new LanguageOption("Perl (LWP)", "perl", BASE_TPL_CLASSPATH + "perl_lwp.tpl", SyntaxConstants.SYNTAX_STYLE_PERL, "pl");
     public static final LanguageOption PHP_CURL = new LanguageOption("PHP (cURL)", "php", BASE_TPL_CLASSPATH + "php_curl.tpl", SyntaxConstants.SYNTAX_STYLE_PHP, "php");
