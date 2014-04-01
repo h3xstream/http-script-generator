@@ -4,13 +4,13 @@ import java.util.Map;
 
 public class TemplateUtil {
 
-    private String buildMap(Map<String,String> map,String start,String end,String entrySeparator) {
+    private String buildMap(Map<String,String> map,String start,String end,String keyValueSeparator, String entrySeparator) {
         StringBuilder buffer = new StringBuilder(start);
 
         int i=0;
         for(Map.Entry<String,String> e : map.entrySet()) {
-            if(i++ != 0) buffer.append(",");
-            buffer.append("\""+ pythonStr(e.getKey()) +entrySeparator + pythonStr(e.getValue())+"\"");
+            if(i++ != 0) buffer.append( entrySeparator );
+            buffer.append("\""+ pythonStr(e.getKey()) + keyValueSeparator + pythonStr(e.getValue())+"\"");
         }
 
         buffer.append(end);
@@ -54,7 +54,7 @@ public class TemplateUtil {
     ///Python util method
 
     public String pythonDict(Map<String,String> map) {
-        return buildMap(map,"{","}","\":\"");
+        return buildMap(map,"{","}","\":\"",",");
     }
 
     public String pythonStr(String value) {
@@ -64,7 +64,7 @@ public class TemplateUtil {
     //Ruby
 
     public String rubyMap(Map<String,String> map) {
-        return buildMap(map,"{","}","\"=>\"");
+        return buildMap(map,"{","}","\"=>\"",",");
     }
 
     public String rubyStr(String value) {
@@ -74,7 +74,7 @@ public class TemplateUtil {
     //Perl
 
     public String perlMap(Map<String,String> map) {
-        return buildMap(map,"{","}","\"=>\"");
+        return buildMap(map,"{","}","\"=>\"",",");
     }
 
     public String perlStr(String value) {
@@ -88,12 +88,12 @@ public class TemplateUtil {
     }
 
     public String phpMap(Map<String,String> map) {
-        return buildMap(map,"array(",")","\"=>\"");
+        return buildMap(map,"array(",")","\"=>\"",",");
     }
 
     public String phpHeadersList(Map<String,String> map) {
 
-        return buildMap(map,"array(",")",": ");
+        return buildMap(map,"array(",")",": ",",");
     }
 
     public String phpUrlEncode(String value) {
@@ -114,4 +114,14 @@ public class TemplateUtil {
         }
         return str.toString();
     }
+
+	// PowerShell
+    public String powershellStr(String value) {
+        return genericString(value);
+    }
+
+    public String powershellDict(Map<String,String> map) {
+        return buildMap(map,"@{","}","\"=\"","; ");
+    }
+
 }
