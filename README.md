@@ -10,7 +10,7 @@ This software is release under [LGPL](http://www.gnu.org/licenses/lgpl.html).
 
 ## Downloads
 
-(Last updated : December 31, 2013)
+(Last updated : June 8, 2014)
 
 ZAP plugin : [Download](https://github.com/h3xstream/http-script-generator/blob/gh-pages/releases/zap/scriptgen-alpha-3.zap?raw=true)
 
