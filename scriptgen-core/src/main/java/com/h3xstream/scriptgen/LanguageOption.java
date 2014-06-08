@@ -14,7 +14,7 @@ public class LanguageOption {
     public static final LanguageOption RUBY_NET_HTTP = new LanguageOption("Ruby (Net::HTTP)", "ruby", BASE_TPL_CLASSPATH + "ruby_nethttp.tpl", SyntaxConstants.SYNTAX_STYLE_RUBY , "rb");
     public static final LanguageOption PERL_LWP = new LanguageOption("Perl (LWP)", "perl", BASE_TPL_CLASSPATH + "perl_lwp.tpl", SyntaxConstants.SYNTAX_STYLE_PERL, "pl");
     public static final LanguageOption PHP_CURL = new LanguageOption("PHP (cURL)", "php", BASE_TPL_CLASSPATH + "php_curl.tpl", SyntaxConstants.SYNTAX_STYLE_PHP, "php");
-	public static final LanguageOption POWERSHELL = new LanguageOption("PowerShell", "powershell", BASE_TPL_CLASSPATH + "psh_webrequest.tpl", SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL, "ps1");
+	public static final LanguageOption POWERSHELL = new LanguageOption("PowerShell (WebRequestSession)", "powershell", BASE_TPL_CLASSPATH + "psh_webrequest.tpl", SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL, "ps1");
 
     public static final LanguageOption[] values = {PYTHON_REQUEST, RUBY_NET_HTTP, PERL_LWP, PHP_CURL, POWERSHELL};
 
