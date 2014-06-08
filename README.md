@@ -16,3 +16,6 @@ ZAP plugin : [Download](https://github.com/h3xstream/http-script-generator/blob/
 
 Burp Suite Pro plugin : [Download](https://github.com/h3xstream/http-script-generator/blob/gh-pages/releases/burp/scriptgen-burp-plugin-2.jar?raw=true)
 
+## Contributors
+
+-   [mattpresson](https://github.com/mattpresson) : Addition of [PowerShell support](https://github.com/h3xstream/http-script-generator/commit/37cdbbb8e4bcd9ab47ec8b0f5974e29b24737e64)
