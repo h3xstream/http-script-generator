@@ -1,8 +1,6 @@
-#Reissue Request Scripter
+#Reissue Request Scripter (Burp plugin) [![Build Status](https://travis-ci.org/h3xstream/http-script-generator.png)](https://travis-ci.org/h3xstream/http-script-generator)
 
-## Resources
-
-Build status : [![Build Status](https://travis-ci.org/h3xstream/http-script-generator.png)](https://travis-ci.org/h3xstream/http-script-generator)
+This extension generates scripts to reissue a selected request. The scripts can be run outside of Burp. It can be useful to script attacks such as second order SQL injection, padding oracle, fuzzing encoded value, etc.
 
 ## License
 
