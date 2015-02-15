@@ -18,6 +18,7 @@ public class HttpRequestInfo implements Cloneable {
     private String method;
     private String url;
     private String hostname;
+    private String queryString;
     private Map<String, String> parametersGet;
     private Map<String, String> parametersPost;
     private String postData;
@@ -31,7 +32,9 @@ public class HttpRequestInfo implements Cloneable {
         this.method = method;
         this.url = url;
         try {
-            this.hostname = new URL(this.url).getHost();
+            URL u = new URL(this.url);
+            this.hostname = u.getHost();
+            this.queryString = u.getPath();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -105,6 +108,10 @@ public class HttpRequestInfo implements Cloneable {
 
     public String getHostname() {
         return hostname;
+    }
+
+    public String getQueryString() {
+        return queryString;
     }
 
     public Map<String, String> getParametersGet() {
