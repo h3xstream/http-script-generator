@@ -28,6 +28,13 @@ curl_setopt($req, CURLOPT_COOKIE,"${util.phpCookies(req.cookies)}");
 curl_setopt($req, CURLOPT_USERPWD, '${util.phpStr(req.basicAuth.username)}:${util.phpStr(req.basicAuth.password)}');
 curl_setopt($req, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
 </#if>
+<#if req.ssl && settings.disableSsl>
+curl_setopt($req, CURLOPT_SSL_VERIFYHOST, false);
+curl_setopt($req, CURLOPT_SSL_VERIFYPEER, false);
+</#if>
+<#if settings.proxy>
+curl_setopt($req, CURLOPT_PROXY, '127.0.0.1:8080');
+</#if>
 $result = curl_exec($req);
 
 echo "Status code: ".curl_getinfo($req, CURLINFO_HTTP_CODE)."\n";

@@ -34,7 +34,7 @@ public class ReissueRequestScripter {
     }
 
     public JFrame openDialogWindow() {
-        this.controller.updateHttpRequest(req);
+        this.controller.setHttpRequest(req);
 
         this.frame.setController(controller); //Controller need to be set prior setting
         this.frame.setTitleSuffix(req.getUrl());

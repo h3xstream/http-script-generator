@@ -1,5 +1,6 @@
 package com.h3xstream.scriptgen.template;
 
+import com.h3xstream.scriptgen.model.DisplaySettings;
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -15,6 +16,7 @@ public class CodeTemplateBuilder {
 
     private HttpRequestInfo request;
     private String templatePath;
+    private DisplaySettings displaySettings = new DisplaySettings();
 
     public CodeTemplateBuilder request(HttpRequestInfo request) {
         this.request = request;
@@ -26,14 +28,27 @@ public class CodeTemplateBuilder {
         return this;
     }
 
+
+    public CodeTemplateBuilder displaySettings(DisplaySettings displaySettings) {
+        this.displaySettings = displaySettings;
+        return this;
+    }
+
     public String build() throws Exception {
 
         Configuration cfg = new Configuration();
         cfg.setClassForTemplateLoading(this.getClass(), "/");
         Template tpl = cfg.getTemplate(templatePath);
 
+
         Map<String,Object> ctxData = new HashMap<String,Object>();
-        ctxData.put("req", request);
+        if(displaySettings.isMinimalHeaders()) {
+            ctxData.put("req", HttpRequestUtil.withMinimalHeaders(request));
+        }
+        else {
+            ctxData.put("req", request);
+        }
+        ctxData.put("settings",displaySettings);
         ctxData.put("util", new TemplateUtil());
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -42,4 +57,5 @@ public class CodeTemplateBuilder {
 
         return new String(out.toByteArray());
     }
+
 }

@@ -1,3 +1,18 @@
+<#if req.ssl && settings.disableSsl>
+add-type @"
+    using System.Net;
+    using System.Security.Cryptography.X509Certificates;
+    public class TrustAllCertsPolicy : ICertificatePolicy {
+        public bool CheckValidationResult(
+            ServicePoint srvPoint, X509Certificate certificate,
+            WebRequest request, int certificateProblem) {
+            return true;
+        }
+    }
+"@
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
+
+</#if>
 <#if req.parametersGet??>
 $paramsGet = ${util.powershellDict(req.parametersGet)}
 </#if>
@@ -17,7 +32,7 @@ $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
 $session.Cookies = $cc
 
 </#if>
-$response = Invoke-WebRequest -Method "${req.method}" -Uri "${req.url}"<#if req.headers??> -Headers $headers</#if><#if req.cookies??> -WebSession $session</#if><#if req.parametersPost??> -Body $paramsPost</#if><#if req.parametersGet??> -Body $paramsGet</#if>
+$response = Invoke-WebRequest -Method "${req.method}" -Uri "${req.url}"<#if req.headers??> -Headers $headers</#if><#if req.cookies??> -WebSession $session</#if><#if req.parametersPost??> -Body $paramsPost</#if><#if req.parametersGet??> -Body $paramsGet</#if><#if settings.proxy> -Proxy 'http://127.0.0.1:8080'</#if>
 
 Write-Host "Status code: $($response.StatusCode)" 
 Write-host "Response body: $($response.Content)"

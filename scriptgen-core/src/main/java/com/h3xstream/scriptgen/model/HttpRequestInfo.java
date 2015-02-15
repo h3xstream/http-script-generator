@@ -13,7 +13,7 @@ import java.util.Map;
  * <p>
  * NOTE: This POJO permit abstraction from the initiator (Burp proxy or ZAP).
  */
-public class HttpRequestInfo {
+public class HttpRequestInfo implements Cloneable {
 
     private String method;
     private String url;
@@ -130,4 +130,17 @@ public class HttpRequestInfo {
     public AuthCredential getBasicAuth() {
         return basicAuth;
     }
+
+    public boolean isSsl() {
+        return getUrl().startsWith("https://");
+    }
+
+    public void setHeaders(Map<String, String> headers) {
+        this.headers = headers;
+    }
+
+    public HttpRequestInfo clone() throws CloneNotSupportedException {
+        return (HttpRequestInfo) super.clone();
+    }
+
 }

@@ -25,7 +25,7 @@ public class HttpRequestInfoFixtures {
     }
 
     public static HttpRequestInfo getGetRequest() {
-        HttpRequestInfo req = new HttpRequestInfo("GET", "http://httpbin.org/get", getParams, null, null, headers);
+        HttpRequestInfo req = new HttpRequestInfo("GET", "https://httpbin.org/get", getParams, null, null, headers);
         return req;
     }
 

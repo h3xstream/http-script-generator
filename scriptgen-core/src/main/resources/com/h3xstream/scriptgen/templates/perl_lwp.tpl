@@ -23,6 +23,12 @@ $ua->cookie_jar($cookies);
 <#if req.basicAuth??>
 $ua->credentials("${util.perlStr(req.hostname)}", "realm-name", '${util.perlStr(req.basicAuth.username)}', '${util.perlStr(req.basicAuth.password)}');
 </#if>
+<#if req.ssl && settings.disableSsl>
+$ua->ssl_opts( verify_hostnames => 0 );
+</#if>
+<#if settings.proxy>
+$ua->proxy(['http'], 'http://127.0.0.1:8080/');
+</#if>
 
 <#if req.parametersPost??>
 my $req = POST $url<#if req.parametersPost??>, ${util.perlMap(req.parametersPost)}</#if>;
