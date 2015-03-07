@@ -16,9 +16,9 @@ public class HttpRequestUtil {
      * make a the code slightly cleaner.
      * Ref: http://en.wikipedia.org/wiki/List_of_HTTP_header_fields
      */
-    private static final List<String> COMMON_HEADERS = Arrays.asList("cache-control",
-            "connection", "if-match", "if-modified-since", "if-none-match", "if-range", "if-unmodified-since", "proxy-connection", "referer",
-            "user-agent", "via");
+    private static final List<String> COMMON_HEADERS = Arrays.asList("accept-language", "accept-encoding",
+            "cache-control", "connection", "if-match", "if-modified-since", "if-none-match", "if-range",
+            "if-unmodified-since", "proxy-connection", "referer", "user-agent", "via");
 
     /**
      * Hide optional headers
