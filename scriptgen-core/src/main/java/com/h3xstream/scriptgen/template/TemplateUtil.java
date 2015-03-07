@@ -125,6 +125,25 @@ public class TemplateUtil {
         return genericString(value);
     }
 
+    public String perlMergePostMultipart(Map<String,String> postParams, List<MultiPartParameter> parameters) {
+        String postParamsPart =
+                postParams == null ? "":
+                buildMap(postParams,"","","\"=>\"",",") + ",";
+
+        StringBuilder buffer = new StringBuilder(postParamsPart);
+        boolean first=true;
+        for(MultiPartParameter p:parameters) {
+            if(!first)
+                buffer.append(",");
+
+            buffer.append(String.format("\"%s\"=>[\"%s\"]", //
+                    p.getName(), p.getFileName()));
+
+            first=false;
+        }
+        return "{"+buffer.toString()+"}";
+    }
+
     //PHP
 
     public String phpStr(String value) {

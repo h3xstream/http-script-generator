@@ -30,7 +30,10 @@ $ua->ssl_opts( verify_hostnames => 0 );
 $ua->proxy(['http'], 'http://127.0.0.1:8080/');
 </#if>
 
-<#if req.parametersPost??>
+<#if req.parametersMultipart??>
+@multipartParams = ${util.perlMergePostMultipart(req.parametersPost,req.parametersMultipart)};
+my $req = POST $url, Content_Type=>'form-data', Content=> @multipartParams;
+<#elseif req.parametersPost??>
 my $req = POST $url<#if req.parametersPost??>, ${util.perlMap(req.parametersPost)}</#if>;
 <#else>
 my $req = ${req.method?upper_case} $url;
