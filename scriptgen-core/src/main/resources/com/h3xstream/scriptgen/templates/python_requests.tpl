@@ -18,6 +18,9 @@ paramsGet = ${util.pythonDict(req.parametersGet)}
 <#if req.parametersPost??>
 paramsPost = ${util.pythonDict(req.parametersPost)}
 </#if>
+<#if req.parametersMultipart??>
+paramsMultipart = ${util.pythonDictMultipart(req.parametersMultipart)}
+</#if>
 <#if req.postData??>
 rawBody = "${util.pythonStr(req.postData)}"
 </#if>
@@ -27,7 +30,7 @@ headers = ${util.pythonDict(req.headers)}
 <#if req.cookies??>
 cookies = ${util.pythonDict(req.cookies)}
 </#if>
-response = session.${req.method?lower_case}("${util.pythonStr(req.url)}"<#if req.parametersPost??>, data=paramsPost</#if><#if req.postData??>, data=rawBody</#if><#if req.parametersGet??>, params=paramsGet</#if><#if req.headers??>, headers=headers</#if><#if req.cookies??>, cookies=cookies</#if><#if req.basicAuth??>, auth=HTTPBasicAuth("${util.pythonStr(req.basicAuth.username)}","${util.pythonStr(req.basicAuth.password)}")</#if><#if settings.proxy>, proxies=proxies</#if><#if req.ssl && settings.disableSsl>, verify=False</#if>)
+response = session.${req.method?lower_case}("${util.pythonStr(req.url)}"<#if req.parametersPost??>, data=paramsPost</#if><#if req.parametersMultipart??>, files=paramsMultipart</#if><#if req.postData??>, data=rawBody</#if><#if req.parametersGet??>, params=paramsGet</#if><#if req.headers??>, headers=headers</#if><#if req.cookies??>, cookies=cookies</#if><#if req.basicAuth??>, auth=HTTPBasicAuth("${util.pythonStr(req.basicAuth.username)}","${util.pythonStr(req.basicAuth.password)}")</#if><#if settings.proxy>, proxies=proxies</#if><#if req.ssl && settings.disableSsl>, verify=False</#if>)
 
 print "Status code:", response.status_code
 print "Response body:", response.content

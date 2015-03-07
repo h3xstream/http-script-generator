@@ -1,10 +1,13 @@
 package com.h3xstream.scriptgen.model;
 
+import com.esotericsoftware.minlog.Log;
+
 import javax.xml.bind.DatatypeConverter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,9 +29,11 @@ public class HttpRequestInfo implements Cloneable {
     private Map<String, String> cookies = new HashMap<String, String>();
 
     private AuthCredential basicAuth;
-    //private AuthCredential digestAuth;
+    private List<MultiPartParameter> parametersMultipart;
 
-    public HttpRequestInfo(String method, String url, Map<String, String> parametersGet, Map<String, String> parametersPost, String postData, Map<String, String> headers) {
+    public HttpRequestInfo(String method, String url, Map<String, String> parametersGet,
+                           Map<String, String> parametersPost, String postData, Map<String, String> headers,
+                           List<MultiPartParameter> parametersMultipart) {
         this.method = method;
         this.url = url;
         try {
@@ -36,10 +41,12 @@ public class HttpRequestInfo implements Cloneable {
             this.hostname = u.getHost();
             this.queryString = u.getPath();
         } catch (MalformedURLException e) {
+            Log.error(e.getMessage());
             throw new RuntimeException(e);
         }
         this.parametersGet = parametersGet;
         this.parametersPost = parametersPost;
+        this.parametersMultipart = parametersMultipart;
         this.postData = postData;
         this.headers = headers;
 
@@ -47,6 +54,7 @@ public class HttpRequestInfo implements Cloneable {
         if(this.parametersGet != null && this.parametersGet.size() == 0) this.parametersGet = null;
         if(this.parametersPost != null && this.parametersPost.size() == 0) this.parametersPost = null;
         if(this.headers != null && this.headers.size() == 0) this.headers = null;
+        if(this.parametersMultipart != null && this.parametersMultipart.size() == 0) this.parametersMultipart = null;
     }
 
     private void extractHeaders() {
@@ -89,9 +97,15 @@ public class HttpRequestInfo implements Cloneable {
                         it.remove();
                     }
                     catch (IllegalArgumentException e){
+                        Log.warn("Malformed Authorization header : "+entry.getValue());
                         continue; //Header will stay unchanged
                     }
                 }
+            }
+
+            //Content-type need to be omit in multi-part request
+            if(entry.getKey().toLowerCase().equals("content-type") && entry.getValue().toLowerCase().startsWith("multipart/form-data;")) {
+                it.remove();
             }
         }
 
@@ -120,6 +134,10 @@ public class HttpRequestInfo implements Cloneable {
 
     public Map<String, String> getParametersPost() {
         return parametersPost;
+    }
+
+    public List<MultiPartParameter> getParametersMultipart() {
+        return parametersMultipart;
     }
 
     public String getPostData() {

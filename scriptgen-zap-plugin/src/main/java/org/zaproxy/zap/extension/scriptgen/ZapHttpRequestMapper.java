@@ -55,6 +55,6 @@ public class ZapHttpRequestMapper {
             }
         }
 
-        return new HttpRequestInfo(method,urlWithoutQuery,paramsGet,paramsPost,postData,headers);
+        return new HttpRequestInfo(method,urlWithoutQuery,paramsGet,paramsPost,postData,headers,null);
     }
 }

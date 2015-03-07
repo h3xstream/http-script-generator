@@ -35,7 +35,7 @@ public class GeneratorFrame<OPTION> extends JFrame {
         try {
             icon = new ImageIcon(inputStreamToBytes(iconStream));
         } catch (IOException e) {
-            System.err.println("Script icon could not be load..");
+            Log.warn("Script icon could not be load..");
         }
     }
 

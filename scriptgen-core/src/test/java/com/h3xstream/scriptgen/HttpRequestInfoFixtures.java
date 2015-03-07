@@ -1,8 +1,11 @@
 package com.h3xstream.scriptgen;
 
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
+import com.h3xstream.scriptgen.model.MultiPartParameter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HttpRequestInfoFixtures {
@@ -17,6 +20,11 @@ public class HttpRequestInfoFixtures {
         postParams.put("username", "admin");
         postParams.put("password", "admin'--**\n\\");
     }
+    static List<MultiPartParameter> multipartParams = new ArrayList<MultiPartParameter>();
+    static {
+        multipartParams.add(new MultiPartParameter("file1", "This is a test!","text/plain","test.txt"));
+        multipartParams.add(new MultiPartParameter("file2", "PNG1234567890","image/png","test.png"));
+    }
     static Map<String, String> headers = new HashMap<String, String>();
     static {
         headers.put("Cookie", "SID=Aualz4Rx0_8t3GJda; LANG=en-US");
@@ -25,12 +33,14 @@ public class HttpRequestInfoFixtures {
     }
 
     public static HttpRequestInfo getGetRequest() {
-        HttpRequestInfo req = new HttpRequestInfo("GET", "https://httpbin.org/get", getParams, null, null, headers);
-        return req;
+        return new HttpRequestInfo("GET", "https://httpbin.org/get", getParams, null, null, headers, null);
     }
 
     public static HttpRequestInfo getPostRequest() {
-        HttpRequestInfo req = new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, postParams, null, headers);
-        return req;
+        return new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, postParams, null, headers, null);
+    }
+
+    public static HttpRequestInfo getPostMultiPartRequest() {
+        return new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, null, null, headers, multipartParams);
     }
 }

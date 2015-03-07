@@ -1,5 +1,9 @@
 package com.h3xstream.scriptgen.template;
 
+import com.h3xstream.scriptgen.model.MultiPartParameter;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TemplateUtil {
@@ -59,6 +63,29 @@ public class TemplateUtil {
 
     public String pythonStr(String value) {
         return genericString(value);
+    }
+
+    /**
+     * Reproduce this code structure : http://docs.python-requests.org/en/latest/user/advanced/#post-multiple-multipart-encoded-files
+     * @param parameters
+     * @return
+     */
+    public String pythonDictMultipart(List<MultiPartParameter> parameters) {
+        //Map<String,String> map = new HashMap<String, String>();
+        StringBuilder buffer = new StringBuilder();
+        boolean first=true;
+        for(MultiPartParameter p:parameters) {
+            //map.put(p.getName(),p.getValue()); //Content-type is lost in the conversion (not usable with requests)
+            if(!first)
+                buffer.append(",");
+
+            buffer.append(String.format("('%s', ('%s', \"%s\", '%s'))", //
+                    p.getName(), p.getFileName(), pythonStr(p.getValue()), p.getContentType()));
+
+            first=false;
+        }
+        return "["+buffer+"]";
+        //return pythonDict(map);
     }
 
     //Ruby

@@ -1,5 +1,6 @@
 package com.h3xstream.scriptgen.gui;
 
+import com.esotericsoftware.minlog.Log;
 import com.h3xstream.scriptgen.LanguageOption;
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
 
@@ -42,9 +43,7 @@ public class ScriptFileChooser {
                     cont.fileSaveSuccess(file.getAbsolutePath());
                 }
             } catch (IOException e) {
-                //FIXME: Logging please
-                System.err.println(e.getMessage());
-
+                Log.warn("Unable to save the script file : "+e.getMessage());
                 cont.fileSaveError(file.getAbsolutePath());
             }
         }
