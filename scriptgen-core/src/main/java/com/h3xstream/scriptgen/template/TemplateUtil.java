@@ -71,11 +71,9 @@ public class TemplateUtil {
      * @return
      */
     public String pythonDictMultipart(List<MultiPartParameter> parameters) {
-        //Map<String,String> map = new HashMap<String, String>();
         StringBuilder buffer = new StringBuilder();
         boolean first=true;
         for(MultiPartParameter p:parameters) {
-            //map.put(p.getName(),p.getValue()); //Content-type is lost in the conversion (not usable with requests)
             if(!first)
                 buffer.append(",");
 
@@ -84,8 +82,7 @@ public class TemplateUtil {
 
             first=false;
         }
-        return "["+buffer+"]";
-        //return pythonDict(map);
+        return "["+buffer.toString()+"]";
     }
 
     //Ruby
@@ -98,6 +95,26 @@ public class TemplateUtil {
         return genericString(value);
     }
 
+    /**
+     * Reproduce this code structure : https://github.com/nicksieger/multipart-post#synopsis
+     * The file contents are not include.
+     * @param parameters
+     * @return
+     */
+    public String rubyDictMultipart(List<MultiPartParameter> parameters) {
+        StringBuilder buffer = new StringBuilder();
+        boolean first=true;
+        for(MultiPartParameter p:parameters) {
+            if(!first)
+                buffer.append(",");
+
+            buffer.append(String.format("\"%s\" => UploadIO.new(File.new(\"./%s\"), \"%s\", \"%s\")", //
+                    p.getName(), p.getFileName(), p.getContentType(), p.getFileName()));
+
+            first=false;
+        }
+        return buffer.toString();
+    }
     //Perl
 
     public String perlMap(Map<String,String> map) {

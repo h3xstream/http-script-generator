@@ -3,6 +3,10 @@ require "uri"
 <#if req.ssl>
 require "openssl"
 </#if>
+<#if req.parametersMultipart??>
+require "net/http/post/multipart"
+# Psst! It require an additional gem : gem install multipart-post
+</#if>
 
 uri = URI.parse("${req.url}")
 <#if req.parametersGet??>
@@ -16,13 +20,19 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 </#if>
 </#if>
 
-request = Net::HTTP::${req.method?capitalize}.new(uri.request_uri)
+<#if req.parametersMultipart??>
+multipartParams = {${util.rubyDictMultipart(req.parametersMultipart)}}
+<#if req.parametersPost??>
+multipartParams = multipartParams.merge(${util.rubyMap(req.parametersPost)})
+</#if>
+</#if>
+request = Net::HTTP::${req.method?capitalize}<#if req.parametersMultipart??>::Multipart</#if>.new(uri.request_uri<#if req.parametersMultipart??>, multipartParams</#if>)
 <#if req.headers??>
 <#list req.headers?keys as h>
 request["${util.rubyStr(h)}"] = "${util.rubyStr(req.headers[h])}"
 </#list>
 </#if>
-<#if req.parametersPost??>
+<#if req.parametersPost?? && !req.parametersMultipart??>
 request.set_form_data(${util.rubyMap(req.parametersPost)})
 </#if>
 <#if req.postData??>
