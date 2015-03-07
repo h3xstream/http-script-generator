@@ -16,6 +16,17 @@ s_string("${util.pythonStr(req.headers[header_name])}")
 s_static("\r\n")
 </#list>
 </#if>
+<#if req.cookies??>
+s_static("Cookie: ")
+<#list (req.cookies)?keys as cookie_name>
+s_static("${util.pythonStr(cookie_name)}")
+s_delim("=")
+s_string("${util.pythonStr(req.cookies[cookie_name])}")
+<#if cookie_name_has_next>
+s_delim("; ")
+</#if>
+</#list>
+</#if>
 <#if req.postData?? || req.parametersPost??>
 s_static("Content-Length: ")
 s_size("post_data", format="ascii", signed=True, fuzzable=True)
@@ -34,9 +45,9 @@ if s_block_start("post_data"):
 </#if>
 <#if req.parametersPost??>
     <#list (req.parametersPost)?keys as param_name>
-    s_static(quote("${util.pythonStr(param_name)}"))
-    s_delim("=")
     if s_block_start("post_param_${param_name_index + 1}",encoder=quote):
+        s_static(quote("${util.pythonStr(param_name)}"))
+        s_delim("=")
         s_string("${util.pythonStr(req.parametersPost[param_name])}")
     s_block_end()
     <#if param_name_has_next>
