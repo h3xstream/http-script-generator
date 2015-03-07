@@ -178,6 +178,26 @@ public class TemplateUtil {
         return str.toString();
     }
 
+    public String phpMergePostMultipart(Map<String,String> postParams, List<MultiPartParameter> parameters) {
+        String postParamsPart = postParams == null ? "":
+                buildMap(postParams,"","","\"=>\"",",") + ",";
+
+        StringBuilder buffer = new StringBuilder(postParamsPart);
+        if(parameters != null) {
+            boolean first = true;
+            for (MultiPartParameter p : parameters) {
+                if (!first)
+                    buffer.append(",");
+
+                buffer.append(String.format("\"%s\"=>\"@./%s\"", //
+                        p.getName(), p.getFileName()));
+
+                first = false;
+            }
+        }
+        return "array("+buffer.toString()+")";
+    }
+
 	// PowerShell
     public String powershellStr(String value) {
         return genericString(value);

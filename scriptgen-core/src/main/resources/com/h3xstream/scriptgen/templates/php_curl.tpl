@@ -1,9 +1,6 @@
 <?php
-<#if req.parametersPost??>
-$paramsPost = "";
-<#list req.parametersPost?keys as p>
-$paramsPost .= ${util.phpUrlEncode(p)}.'='.${util.phpUrlEncode(req.parametersPost[p])}<#if p_has_next>.'&'</#if>;
-</#list>
+<#if req.parametersPost?? || req.parametersMultipart??>
+$paramsPost = ${util.phpMergePostMultipart(req.parametersPost,req.parametersMultipart)};
 
 </#if>
 <#if req.postData??>
@@ -12,7 +9,7 @@ $postData = "${util.phpStr(req.postData)}";
 </#if>
 $req = curl_init("${util.phpStr(req.url)}");
 curl_setopt($req, CURLOPT_RETURNTRANSFER, true);
-<#if req.parametersPost??>
+<#if  req.parametersPost?? || req.parametersMultipart??>
 curl_setopt($req, CURLOPT_POSTFIELDS, $paramsPost);
 </#if>
 <#if req.postData??>
