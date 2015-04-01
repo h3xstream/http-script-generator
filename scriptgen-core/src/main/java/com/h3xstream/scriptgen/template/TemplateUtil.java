@@ -1,12 +1,16 @@
 package com.h3xstream.scriptgen.template;
 
+import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import com.h3xstream.scriptgen.model.MultiPartParameter;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class TemplateUtil {
+
+    private static List<Character> CHAR_NO_URL_ENCODE = Arrays.asList('_','-','*');
 
     private String buildMap(Map<String,String> map,String start,String end,String keyValueSeparator, String entrySeparator) {
         StringBuilder buffer = new StringBuilder(start);
@@ -159,15 +163,6 @@ public class TemplateUtil {
         return buildMap(map,"array(",")",": ",",");
     }
 
-    public String phpUrlEncode(String value) {
-        boolean containsSpecials = false;
-        for(int i=0;i<value.length();i++) {
-            if(!(Character.isAlphabetic(value.charAt(i)) || Character.isDigit(value.charAt(i)))) {
-                containsSpecials = true;
-            }
-        }
-        return containsSpecials? "urlencode(\""+phpStr(value)+"\")":"\""+phpStr(value)+"\"";
-    }
 
     public String phpCookies(Map<String,String> cookies) {
         StringBuilder str = new StringBuilder();
@@ -205,6 +200,45 @@ public class TemplateUtil {
 
     public String powershellDict(Map<String,String> map) {
         return buildMap(map,"@{","}","\"=\"","; ");
+    }
+
+    //JavaScript
+
+    public String jsStr(String value) {
+        return genericString(value);
+    }
+
+
+    public String jsUrlParam(Map<String, String> map) {
+        StringBuilder buffer = new StringBuilder();
+        boolean first = true;
+        for(Map.Entry<String,String> param : map.entrySet()) {
+            if(!first) {
+                buffer.append("&");
+            }
+            buffer.append(jsUrlEncode(param.getKey()));
+            buffer.append("=");
+            buffer.append(jsUrlEncode(param.getValue()));
+
+            first=false;
+        }
+        return buffer.toString();
+    }
+
+
+    public String jsUrlEncode(String value) {
+        boolean containsSpecials = false;
+        for(int i=0;i<value.length();i++) {
+            if(!(Character.isAlphabetic(value.charAt(i)) || Character.isDigit(value.charAt(i)) || //
+                    CHAR_NO_URL_ENCODE.contains(value.charAt(i)) )) {
+                containsSpecials = true;
+            }
+        }
+        return containsSpecials? "\"+escape(\""+jsStr(value)+"\")+\"":jsStr(value);
+    }
+
+    public String jsMap(Map<String,String> map) {
+        return buildMap(map,"{","}","\":\"",",");
     }
 
 }

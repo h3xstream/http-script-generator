@@ -16,8 +16,12 @@ public class LanguageOption {
     public static final LanguageOption PHP_CURL = new LanguageOption("PHP (cURL)", "php", BASE_TPL_CLASSPATH + "php_curl.tpl", SyntaxConstants.SYNTAX_STYLE_PHP, "php");
 	public static final LanguageOption POWERSHELL = new LanguageOption("PowerShell (WebRequest)", "powershell", BASE_TPL_CLASSPATH + "psh_webrequest.tpl", SyntaxConstants.SYNTAX_STYLE_UNIX_SHELL, "ps1");
     public static final LanguageOption PYTHON_SULLEY = new LanguageOption("Python (Sulley) - Experimental", "sulley", BASE_TPL_CLASSPATH + "python_sulley.tpl", SyntaxConstants.SYNTAX_STYLE_PYTHON, "py");
+    public static final LanguageOption JAVASCRIPT_XHR = new LanguageOption("Javascript (XMLHttpRequest)", "javascript", BASE_TPL_CLASSPATH + "javascript_xhr.tpl", SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT, "js");
+    public static final LanguageOption JAVASCRIPT_JQUERY = new LanguageOption("Javascript (JQuery)", "javascript", BASE_TPL_CLASSPATH + "javascript_jquery.tpl", SyntaxConstants.SYNTAX_STYLE_JAVASCRIPT, "js");
+    public static final LanguageOption HTML_FORM = new LanguageOption("HTML form", "html", BASE_TPL_CLASSPATH + "html_form.tpl", SyntaxConstants.SYNTAX_STYLE_HTML, "html");
 
-    public static final LanguageOption[] values = {PYTHON_REQUEST, RUBY_NET_HTTP, PERL_LWP, PHP_CURL, POWERSHELL,PYTHON_SULLEY};
+    public static final LanguageOption[] values = {PYTHON_REQUEST, RUBY_NET_HTTP, PERL_LWP, PHP_CURL, POWERSHELL,
+            PYTHON_SULLEY, JAVASCRIPT_XHR, JAVASCRIPT_JQUERY, HTML_FORM};
 
     //Properties of each language
     private final String title;
