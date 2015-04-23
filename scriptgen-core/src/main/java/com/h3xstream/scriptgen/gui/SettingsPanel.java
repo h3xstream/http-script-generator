@@ -24,7 +24,7 @@ public class SettingsPanel extends JPanel {
         UpdateCode updateCodeListener = new UpdateCode();
 
         chkProxy = new JCheckBox("Proxy redirection");
-        chkProxy.setToolTipText("The requests will be redirect to Burp proxy");
+        chkProxy.setToolTipText("The requests will be redirected to Burp proxy");
         chkProxy.addItemListener(updateCodeListener);
         add(chkProxy);
 
