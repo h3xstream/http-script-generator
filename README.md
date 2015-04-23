@@ -30,7 +30,7 @@ Burp Suite Pro plugin : [Download](https://github.com/h3xstream/http-script-gene
 
 ### Language Options
 
-Script for various language are available : Python, Ruby, Perl, PowerShell and JavaScript.
+Scripts can be generated for various languages : Python, Ruby, Perl, PHP, PowerShell and JavaScript.
 
 ![Reissue Request Scripter: Language Options](http://h3xstream.github.io/http-script-generator/screenshots/3_languages.png)
 
