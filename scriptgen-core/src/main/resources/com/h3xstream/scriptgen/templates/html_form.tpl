@@ -6,7 +6,7 @@
 </#if>
 <#if req.parametersMultipart??>
 <#list req.parametersMultipart as mp>
-<input type="file" name="${util.jsStr(mp)}">
+<input type="file" name="${util.jsStr(mp.name)}">
 </#list>
 </#if>
 
