@@ -35,6 +35,12 @@
             <artifactId>miglayout-swing</artifactId>
         </dependency>
 
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>minlog</artifactId>
@@ -58,6 +64,7 @@
             <artifactId>mockito-all</artifactId>
             <scope>test</scope>
         </dependency>
+
 
     </dependencies>
 
