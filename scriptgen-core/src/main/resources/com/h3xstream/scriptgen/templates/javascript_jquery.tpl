@@ -1,6 +1,6 @@
 //JQuery preload (optional)
 (function(){
-  var s = document.createElement('script');s.type = 'text/javascript';s.async = true;s.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js';
+  var s = document.createElement('script');s.type = 'text/javascript';s.async = true;s.src = 'https://code.jquery.com/jquery-2.1.4.min.js';
   (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(s);
 })();
 
