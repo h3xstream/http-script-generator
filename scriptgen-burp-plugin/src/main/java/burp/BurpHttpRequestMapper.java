@@ -82,10 +82,9 @@ public class BurpHttpRequestMapper {
         if (requestBodyString.indexOf("=") == -1) {
             //In the case of RAW body (json, binary, etc.)
             paramsPost = new HashMap<String, String>();
-            if(!"".equals(requestBodyString)) {
+            if("".equals(requestBodyString)) {
                 requestBodyString = null;
             }
-
         }
         else {
             requestBodyString = null;
