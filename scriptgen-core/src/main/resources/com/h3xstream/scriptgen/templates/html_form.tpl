@@ -3,6 +3,10 @@
 <#list req.parametersPost?keys as p>
 <input type="hidden" name="${util.jsStr(p)}" value="${util.jsStr(req.parametersPost[p])}">
 </#list>
+<#elseif req.parametersGet??>
+<#list req.parametersGet?keys as p>
+<input type="hidden" name="${util.jsStr(p)}" value="${util.jsStr(req.parametersGet[p])}">
+</#list>
 </#if>
 <#if req.parametersMultipart??>
 <#list req.parametersMultipart as mp>

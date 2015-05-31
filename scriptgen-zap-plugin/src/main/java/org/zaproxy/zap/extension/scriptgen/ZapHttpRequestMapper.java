@@ -54,15 +54,7 @@ public class ZapHttpRequestMapper {
             paramsPost.put(URLDecoder.decode(param.getName(), "UTF-8"), URLDecoder.decode(param.getValue(),"UTF-8"));
         }
 
-        String postData = null;
-        String requestBody = new String(httpMessage.getRequestBody().getBytes());
-        if(requestBody.indexOf("=") == -1) { //No "=" is found in the body
-            postData = requestBody;
-            paramsPost = new HashMap<String, String>(); //Empty the post parameters
-            if("".equals(postData)) {
-                postData = null;
-            }
-        }
+
 
         String multiPartBoundary = null;
 
@@ -87,9 +79,21 @@ public class ZapHttpRequestMapper {
             }
         }
 
+        //Multi-part parameters
         List<MultiPartParameter> multiPartParameters = new ArrayList<MultiPartParameter>();
         if(multiPartBoundary != null) { //Boundary was intercept during the previous step (header parsing)
             parseMultiPartParameter(httpMessage.getRequestBody().getBytes(),multiPartBoundary.getBytes(), multiPartParameters, paramsPost);
+        }
+
+        //Post-data
+        String postData = null;
+        String requestBody = new String(httpMessage.getRequestBody().getBytes());
+        if(paramsPost.size() == 0) { //No "=" is found in the body
+            postData = requestBody;
+            paramsPost = new HashMap<String, String>(); //Empty the post parameters
+            if("".equals(postData)) {
+                postData = null;
+            }
         }
 
         return new HttpRequestInfo(method,urlWithoutQuery,paramsGet,paramsPost,postData,headers,multiPartParameters);

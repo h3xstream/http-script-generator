@@ -6,6 +6,19 @@ s_initialize("HTTP request to ${req.url}")
 #Query string
 s_static("${req.method} ")
 s_string("${req.queryString}")
+<#if req.parametersGet??>
+s_delim("?")
+<#list (req.parametersGet)?keys as param_name>
+if s_block_start("get_param_${param_name_index + 1}",encoder=quote):
+    s_static(quote("${util.pythonStr(param_name)}"))
+    s_delim("=")
+    s_string("${util.pythonStr(req.parametersGet[param_name])}")
+s_block_end()
+<#if param_name_has_next>
+s_delim("&")
+</#if>
+</#list>
+</#if>
 s_static(" HTTP/1.1\r\n")
 
 #Headers
