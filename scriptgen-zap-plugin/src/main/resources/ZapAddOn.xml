@@ -7,12 +7,12 @@
     <changes/>
     <dependson/>
     <extensions>
-      <extension>org.zaproxy.zap.extension.scriptgen</extension>
+      <extension>org.zaproxy.zap.extension.scriptgen.ReissueRequestScripterMenuExtension</extension>
     </extensions>
     <ascanrules/>
     <pscanrules/>
     <filters/>
     <files/>
-    <not-before-version>2.2.2</not-before-version>
-    <not-from-version/>
+    <not-before-version>2.4.1</not-before-version>
+    <not-from-version></not-from-version>
 </zapaddon>

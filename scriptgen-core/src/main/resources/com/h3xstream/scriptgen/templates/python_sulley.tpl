@@ -54,7 +54,7 @@ s_static("\r\n")
 #Post data
 if s_block_start("post_data"):
 <#if req.postData??>
-    s_string("${req.postData}")
+    s_string("${util.pythonStr(req.postData)}")
 </#if>
 <#if req.parametersPost??>
     <#list (req.parametersPost)?keys as param_name>

@@ -1,5 +1,5 @@
 language: java
-install: mvn install:install-file -Dfile=libs/zap.jar -DgroupId=org.zaproxy -DartifactId=zaproxy -Dversion=2.2.2 -Dpackaging=jar
+install: mvn install:install-file -Dfile=libs/zap-2.4.1.jar -DgroupId=org.zaproxy -DartifactId=zaproxy -Dversion=2.4.1 -Dpackaging=jar
 jdk:
   - oraclejdk7
 before_install:
