@@ -34,8 +34,15 @@ public class ZapHttpRequestMapper {
     private static final Pattern PATTERN_MULTIPART_PARAM_CONTENT_TYPE = Pattern.compile("[Cc]ontent-[tT]ype: ([^\n^\r]+)");
 
 
+    public static List<HttpRequestInfo> buildRequestInfo(List<HttpMessage> httpMessages) throws IOException {
+        List<HttpRequestInfo> reqs = new ArrayList<>();
+        for(HttpMessage msg: httpMessages) {
+            reqs.add(buildRequestInfo(msg));
+        }
+        return reqs;
+    }
 
-    public static HttpRequestInfo buildRequestInfo(HttpMessage httpMessage) throws IOException {
+    private static HttpRequestInfo buildRequestInfo(HttpMessage httpMessage) throws IOException {
         String method = httpMessage.getRequestHeader().getMethod();
         URI url = httpMessage.getRequestHeader().getURI();
         boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getScheme().equals("https")) || (url.getPort() == 80 && url.getScheme().equals("http"));
@@ -49,16 +56,14 @@ public class ZapHttpRequestMapper {
             paramsGet.put(URLDecoder.decode(param.getName(), "UTF-8"), URLDecoder.decode(param.getValue(), "UTF-8"));
         }
 
-        Map<String,String> paramsPost = new HashMap<String, String>();
+        Map<String,String> paramsPost = new HashMap<>();
         for(HtmlParameter param : httpMessage.getFormParams()) {
             paramsPost.put(URLDecoder.decode(param.getName(), "UTF-8"), URLDecoder.decode(param.getValue(),"UTF-8"));
         }
 
-
-
         String multiPartBoundary = null;
 
-        Map<String,String> headers = new HashMap<String, String>();
+        Map<String,String> headers = new HashMap<>();
         String headerString = httpMessage.getRequestHeader().getHeadersAsString();
         BufferedReader br = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(headerString.getBytes())));
         String headerLine = null;
@@ -90,7 +95,7 @@ public class ZapHttpRequestMapper {
         String requestBody = new String(httpMessage.getRequestBody().getBytes());
         if(paramsPost.size() == 0) { //No "=" is found in the body
             postData = requestBody;
-            paramsPost = new HashMap<String, String>(); //Empty the post parameters
+            paramsPost = new HashMap<>(); //Empty the post parameters
             if("".equals(postData)) {
                 postData = null;
             }
@@ -141,4 +146,5 @@ public class ZapHttpRequestMapper {
             //Oops
         }
     }
+
 }
