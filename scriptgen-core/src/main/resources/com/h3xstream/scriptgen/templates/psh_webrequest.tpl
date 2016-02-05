@@ -1,4 +1,4 @@
-<#if req.ssl && settings.disableSsl>
+<#if util.atLeastOneSsl(requests) && settings.disableSsl>
 add-type @"
     using System.Net;
     using System.Security.Cryptography.X509Certificates;
@@ -13,6 +13,7 @@ add-type @"
 [System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
 </#if>
+<#list requests as req>
 <#if req.parametersGet??>
 $paramsGet = ${util.powershellDict(req.parametersGet)}
 </#if>
@@ -36,3 +37,5 @@ $response = Invoke-WebRequest -Method "${req.method}" -Uri "${req.url}"<#if req.
 
 Write-Host "Status code: $($response.StatusCode)" 
 Write-host "Response body: $($response.Content)"
+
+</#list>

@@ -7,6 +7,7 @@ import freemarker.template.Template;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,12 +15,12 @@ import java.util.Map;
  */
 public class CodeTemplateBuilder {
 
-    private HttpRequestInfo request;
+    private List<HttpRequestInfo> requests;
     private String templatePath;
     private DisplaySettings displaySettings = new DisplaySettings();
 
-    public CodeTemplateBuilder request(HttpRequestInfo request) {
-        this.request = request;
+    public CodeTemplateBuilder request(List<HttpRequestInfo> requests) {
+        this.requests = requests;
         return this;
     }
 
@@ -43,10 +44,10 @@ public class CodeTemplateBuilder {
 
         Map<String,Object> ctxData = new HashMap<String,Object>();
         if(displaySettings.isMinimalHeaders()) {
-            ctxData.put("req", HttpRequestUtil.withMinimalHeaders(request));
+            ctxData.put("requests", HttpRequestUtil.withMinimalHeaders(requests));
         }
         else {
-            ctxData.put("req", request);
+            ctxData.put("requests", requests);
         }
         ctxData.put("settings",displaySettings);
         ctxData.put("util", new TemplateUtil());

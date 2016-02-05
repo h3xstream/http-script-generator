@@ -1,3 +1,4 @@
+<#list requests as req>
 <form name="csrf_poc" action="${util.jsStr(req.url)}<#if req.parametersGet?? && req.parametersPost??>?${util.jsUrlParam(req.parametersGet)}</#if>" method="${req.method?upper_case}">
 <#if req.parametersPost??>
 <#list req.parametersPost?keys as p>
@@ -19,3 +20,5 @@
 <!-- Auto-submit script:
 <script type="text/javascript">document.forms.csrf_poc.submit();</script>
 -->
+
+</#list>

@@ -10,19 +10,20 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 public class ScriptFileChooser {
 
     public static String FILE_CHOOSER = "FILE_CHOOSER";
 
-    public void saveScriptToFile(String code, final LanguageOption lang,Component parent,HttpRequestInfo request,GeneratorController cont) {
+    public void saveScriptToFile(String code, final LanguageOption lang, Component parent, List<HttpRequestInfo> requests, GeneratorController cont) {
 
         JFileChooser fileChooser = new JFileChooser();
 
         fileChooser.setDialogTitle("Save to file");
         String currentDirectory = new File(".").getAbsolutePath();
 
-        fileChooser.setSelectedFile(new File(currentDirectory,request.getHostname().replace('.','-')+"_http_script." + lang.getExtension()));
+        fileChooser.setSelectedFile(new File(currentDirectory,requests.get(0).getHostname().replace('.','-')+"_http_script." + lang.getExtension()));
         fileChooser.setName(FILE_CHOOSER);
 
         //Extension filter

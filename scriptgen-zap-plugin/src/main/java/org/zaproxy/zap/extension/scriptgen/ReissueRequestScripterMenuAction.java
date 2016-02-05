@@ -4,8 +4,12 @@ import com.h3xstream.scriptgen.ReissueRequestScripter;
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
 import org.parosproxy.paros.network.HttpMessage;
 import org.zaproxy.zap.view.PopupMenuHttpMessage;
+import org.zaproxy.zap.view.popup.PopupMenuItemHttpMessageContainer;
 
-public class ReissueRequestScripterMenuAction extends PopupMenuHttpMessage {
+import java.io.IOException;
+import java.util.List;
+
+public class ReissueRequestScripterMenuAction extends PopupMenuItemHttpMessageContainer {
 
     private ReissueRequestScripterMenuExtension extension;
 
@@ -13,17 +17,21 @@ public class ReissueRequestScripterMenuAction extends PopupMenuHttpMessage {
         super(label);
     }
 
-    @Override
-    public void performAction(HttpMessage httpMessage) throws Exception {
-        //View.getSingleton().showMessageDialog(extension.getMessage("ext.scriptgen.test"));
-        HttpRequestInfo req = ZapHttpRequestMapper.buildRequestInfo(httpMessage);
-        new ReissueRequestScripter(req).openDialogWindow();
+    protected void performActions(List<HttpMessage> var1) {
+
     }
 
     @Override
-    public boolean isEnableForInvoker(Invoker invoker) {
-        return true;
+    public void performAction(HttpMessage httpMessage) {
+        HttpRequestInfo req = null;
+        try {
+            req = ZapHttpRequestMapper.buildRequestInfo(httpMessage);
+            new ReissueRequestScripter(req).openDialogWindow();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 
     public void setExtension(ReissueRequestScripterMenuExtension extension) {
         this.extension = extension;

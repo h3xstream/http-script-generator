@@ -8,7 +8,6 @@ import static org.testng.Assert.assertTrue;
 
 public class CodeTemplateBuilderPowershellTest extends CodeTemplateBuilderBaseTest {
 
-
     HttpRequestInfo reqGet = HttpRequestInfoFixtures.getGetRequest();
     HttpRequestInfo reqPost = HttpRequestInfoFixtures.getPostRequest();
 

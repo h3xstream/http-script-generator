@@ -1,3 +1,4 @@
+<#list requests as req>
 var http = new XMLHttpRequest();
 <#if req.parametersPost??>
 var params = "${util.jsUrlParam(req.parametersPost)}";
@@ -23,3 +24,5 @@ http.onreadystatechange = function() {
     }
 }
 http.send(params);
+
+</#list>

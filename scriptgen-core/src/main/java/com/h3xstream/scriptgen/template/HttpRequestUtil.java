@@ -3,6 +3,7 @@ package com.h3xstream.scriptgen.template;
 import com.esotericsoftware.minlog.Log;
 import com.h3xstream.scriptgen.model.HttpRequestInfo;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,20 +23,23 @@ public class HttpRequestUtil {
 
     /**
      * Hide optional headers
-     * @param req
+     * @param requests
      * @return
      */
-    public static HttpRequestInfo withMinimalHeaders(HttpRequestInfo req) {
-        Map<String,String> newHeaders = hideCommonHeaders(req.getHeaders());
-        try {
-            HttpRequestInfo cloneReq = req.clone();
-            cloneReq.setHeaders(hideCommonHeaders(req.getHeaders()));
-            return cloneReq;
-        } catch (CloneNotSupportedException e) {
-            Log.error("Error during the clone operation : "+e.getMessage());
+    public static List<HttpRequestInfo> withMinimalHeaders(List<HttpRequestInfo> requests) {
+        List<HttpRequestInfo> transformRequests = new ArrayList<>();
+        for(HttpRequestInfo req : requests) {
+            Map<String,String> newHeaders = hideCommonHeaders(req.getHeaders());
+            try {
+                HttpRequestInfo cloneReq = req.clone();
+                cloneReq.setHeaders(hideCommonHeaders(req.getHeaders()));
+                transformRequests.add(cloneReq);
+            } catch (CloneNotSupportedException e) {
+                Log.error("Error during the clone operation : "+e.getMessage());
+                throw new RuntimeException(e);
+            }
         }
-        return req;
-        //return new HttpRequestInfo(req.getMethod(),req.getUrl(),req.getParametersGet(),req.getParametersPost(),req.getPostData(),newHeaders);
+        return transformRequests;
     }
 
     private static Map<String,String> hideCommonHeaders(Map<String,String> origHeaders) {

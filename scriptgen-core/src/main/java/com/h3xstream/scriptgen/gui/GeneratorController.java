@@ -9,18 +9,19 @@ import com.h3xstream.scriptgen.template.CodeTemplateBuilder;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.List;
 
 
 public class GeneratorController {
 
 
-    HttpRequestInfo request;
+    List<HttpRequestInfo> requests;
 
     LanguageOption latestLanguage;
     DisplaySettings latestDisplaySettings = new DisplaySettings();
 
-    public void setHttpRequest(HttpRequestInfo request) {
-        this.request = request;
+    public void setHttpRequest(List<HttpRequestInfo> requests) {
+        this.requests = requests;
     }
 
 
@@ -29,7 +30,7 @@ public class GeneratorController {
 
         Log.debug("Updating the language to "+newLanguage.getLanguage());
 
-        String codeGenerated = new CodeTemplateBuilder().request(request)
+        String codeGenerated = new CodeTemplateBuilder().request(requests)
                 .templatePath(newLanguage.getTemplate())
                 .displaySettings(latestDisplaySettings).build();
 
@@ -41,7 +42,7 @@ public class GeneratorController {
 
         Log.debug("Updating the settings to "+newDisplay.toString());
 
-        String codeGenerated = new CodeTemplateBuilder().request(request)
+        String codeGenerated = new CodeTemplateBuilder().request(requests)
                 .templatePath(latestLanguage.getTemplate())
                 .displaySettings(newDisplay).build();
 
@@ -54,7 +55,7 @@ public class GeneratorController {
     }
 
     public void saveScriptToFile(String code, final LanguageOption lang,Component parent) {
-        new ScriptFileChooser().saveScriptToFile(code,lang,parent,request,this);
+        new ScriptFileChooser().saveScriptToFile(code,lang,parent,requests,this);
     }
 
     public void fileSaveSuccess(String fileName) {

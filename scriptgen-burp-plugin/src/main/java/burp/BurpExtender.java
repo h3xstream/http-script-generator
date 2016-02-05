@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class BurpExtender implements IBurpExtender, IContextMenuFactory {
@@ -50,24 +51,15 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
     public List<JMenuItem> createMenuItems(IContextMenuInvocation invocation) {
         IHttpRequestResponse[] responsesSelected = invocation.getSelectedMessages();
 
-        byte[] requestBytes = responsesSelected[0].getRequest();
-        IRequestInfo requestInfo = helpers.analyzeRequest(responsesSelected[0].getHttpService(), requestBytes);
-
-        List<JMenuItem> menuItems = new ArrayList<JMenuItem>();
-
-        JMenuItem item = new JMenuItem(new GenerateScriptAction(requestInfo,requestBytes));
-        menuItems.add(item);
-
-        return menuItems;
+        return Arrays.asList(new JMenuItem(new GenerateScriptAction(responsesSelected)));
     }
 
     private class GenerateScriptAction extends AbstractAction {
-        private IRequestInfo requestInfo;
-        private byte[] requestBytes;
-        public GenerateScriptAction(IRequestInfo requestInfo,byte[] requestBytes) {
+        private IHttpRequestResponse[] requestSelected;
+
+        public GenerateScriptAction(IHttpRequestResponse[] requestSelected) {
             super("Generate Script");
-            this.requestInfo = requestInfo;
-            this.requestBytes = requestBytes;
+            this.requestSelected = requestSelected;
         }
 
         @Override
@@ -75,11 +67,11 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
             //JOptionPane.showMessageDialog(null, "Testing...");
 
             try {
-                HttpRequestInfo req = BurpHttpRequestMapper.buildRequestInfo(requestInfo, requestBytes);
+                List<HttpRequestInfo> req = BurpHttpRequestMapper.buildListRequestInfo(requestSelected, helpers);
                 new ReissueRequestScripter(req).openDialogWindow();
             }
             catch (Exception ex) {
-                Log.error("Unexpected error while building the request entity."+ex.getMessage());
+                Log.error("Unexpected error while building the request entity. "+ex.getMessage());
                 ex.printStackTrace();
             }
         }

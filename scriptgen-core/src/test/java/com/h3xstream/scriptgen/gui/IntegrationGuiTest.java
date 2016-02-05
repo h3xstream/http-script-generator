@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.Arrays;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -31,7 +32,7 @@ public class IntegrationGuiTest {
         frame = new GeneratorFrame(LanguageOption.values);
 
         HttpRequestInfo req = HttpRequestInfoFixtures.getPostRequest();
-        ReissueRequestScripter scriptGen = new ReissueRequestScripter(req,controller,frame);
+        ReissueRequestScripter scriptGen = new ReissueRequestScripter(Arrays.asList(req),controller,frame);
         window = new FrameFixture(scriptGen.openDialogWindow());
         window.show();
     }

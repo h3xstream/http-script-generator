@@ -15,7 +15,21 @@ import java.util.List;
 import java.util.Map;
 
 public class BurpHttpRequestMapper {
-    public static HttpRequestInfo buildRequestInfo(IRequestInfo requestInfo, byte[] requestBytes) {
+
+    public static List<HttpRequestInfo> buildListRequestInfo(IHttpRequestResponse[] requestsSelected, IExtensionHelpers helpers) {
+
+        List<HttpRequestInfo> requests = new ArrayList<>();
+
+        for (IHttpRequestResponse req : requestsSelected) {
+            requests.add(buildSingleRequestInfo(req,helpers));
+        }
+        return requests;
+    }
+
+    private static HttpRequestInfo buildSingleRequestInfo(IHttpRequestResponse req, IExtensionHelpers helpers) {
+        byte[] requestBytes = req.getRequest();
+        IRequestInfo requestInfo = helpers.analyzeRequest(req.getHttpService(), requestBytes);
+
         URL url = requestInfo.getUrl();
         boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getProtocol().equals("https")) || (url.getPort() == 80 && url.getProtocol().equals("http"));
 

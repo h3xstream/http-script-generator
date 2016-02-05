@@ -241,4 +241,42 @@ public class TemplateUtil {
         return buildMap(map,"{","}","\":\"",",");
     }
 
+
+    //Detect conditions on list of requests
+
+    public boolean atLeastOneSsl(List<HttpRequestInfo> requests) {
+        for(HttpRequestInfo req : requests) {
+            if(req.isSsl()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean atLeastOneCookie(List<HttpRequestInfo> requests) {
+        for(HttpRequestInfo req : requests) {
+            if(req.getCookies() != null && req.getCookies().size() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean atLeastOneBasicAuth(List<HttpRequestInfo> requests) {
+        for(HttpRequestInfo req : requests) {
+            if(req.getBasicAuth() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean atLeastOneMultipart(List<HttpRequestInfo> requests) {
+        for(HttpRequestInfo req : requests) {
+            if(req.getParametersMultipart() != null) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

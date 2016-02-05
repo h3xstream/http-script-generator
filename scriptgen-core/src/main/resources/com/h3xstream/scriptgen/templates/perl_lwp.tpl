@@ -1,9 +1,10 @@
 use LWP::UserAgent;
-<#if req.cookies??>
+use HTTP::Request::Common;
+<#if util.atLeastOneCookie(requests)>
 use HTTP::Cookies;
 </#if>
-use HTTP::Request::Common;
 
+<#list requests as req>
 my $url = URI->new("${req.url}");
 <#if req.parametersGet??>
 $url->query_form(${util.perlMap(req.parametersGet)});
@@ -50,3 +51,5 @@ my $resp = $ua->request($req);
 
 print "Status code : ".$resp->code."\n";
 print "Response body : ".$resp->content."\n";
+
+</#list>

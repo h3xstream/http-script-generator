@@ -1,10 +1,11 @@
 from sulley import *
 from urllib import quote
 
+<#list requests as req>
 s_initialize("HTTP request to ${req.url}")
 
 #Query string
-s_static("${req.method} ")
+s_static("${req.method?upper_case} ")
 s_string("${req.queryString}")
 <#if req.parametersGet??>
 s_delim("?")
@@ -70,3 +71,5 @@ if s_block_start("post_data"):
 </#if>
 s_block_end()
 </#if>
+
+</#list>

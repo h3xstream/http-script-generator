@@ -1,4 +1,5 @@
 <?php
+<#list requests as req>
 <#if req.parametersPost?? || req.parametersMultipart??>
 $paramsPost = ${util.phpMergePostMultipart(req.parametersPost,req.parametersMultipart)};
 
@@ -38,4 +39,6 @@ echo "Status code: ".curl_getinfo($req, CURLINFO_HTTP_CODE)."\n";
 echo "Response body: ".$result."\n";
 
 curl_close($req);
+
+</#list>
 ?>

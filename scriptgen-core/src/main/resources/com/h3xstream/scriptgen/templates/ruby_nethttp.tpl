@@ -1,13 +1,14 @@
 require "net/http"
 require "uri"
-<#if req.ssl>
+<#if util.atLeastOneSsl(requests)>
 require "openssl"
 </#if>
-<#if req.parametersMultipart??>
+<#if util.atLeastOneMultipart(requests)>
 require "net/http/post/multipart"
 # Psst! It require an additional gem : gem install multipart-post
 </#if>
 
+<#list requests as req>
 uri = URI.parse("${req.url}")
 <#if req.parametersGet??>
 uri.query = URI.encode_www_form(${util.rubyMap(req.parametersGet)})
@@ -52,3 +53,4 @@ puts "Response body: "+response.body
 <#if settings.proxy>
 }
 </#if>
+</#list>

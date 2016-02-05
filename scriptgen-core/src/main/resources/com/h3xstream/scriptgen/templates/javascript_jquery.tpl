@@ -4,6 +4,7 @@
   (document.getElementsByTagName('head')[0]||document.getElementsByTagName('body')[0]).appendChild(s);
 })();
 
+<#list requests as req>
 $.ajax({
     url: "${util.jsStr(req.queryString)}<#if req.parametersGet?? && req.parametersPost??>?${util.jsUrlParam(req.parametersGet)}</#if>",
     type: "${req.method?lower_case}",
@@ -25,3 +26,5 @@ $.ajax({
         console.info(data);
     }
 });
+
+</#list>
