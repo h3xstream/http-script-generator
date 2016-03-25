@@ -33,14 +33,14 @@ public class HttpRequestInfoFixtures {
     }
 
     public static HttpRequestInfo getGetRequest() {
-        return new HttpRequestInfo("GET", "https://httpbin.org/get", getParams, null, null, headers, null);
+        return new HttpRequestInfo("GET", "https://httpbin.org/get?a=b", getParams, null, null, headers, null);
     }
 
     public static HttpRequestInfo getPostRequest() {
-        return new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, postParams, null, headers, null);
+        return new HttpRequestInfo("POST", "http://httpbin.org/post?a=1", getParams, postParams, null, headers, null);
     }
 
     public static HttpRequestInfo getPostMultiPartRequest() {
-        return new HttpRequestInfo("POST", "http://httpbin.org/post", getParams, null, null, headers, multipartParams);
+        return new HttpRequestInfo("POST", "http://httpbin.org/post?test=1", getParams, null, null, headers, multipartParams);
     }
 }

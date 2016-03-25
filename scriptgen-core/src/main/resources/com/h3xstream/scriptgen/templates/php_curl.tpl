@@ -8,7 +8,7 @@ $paramsPost = ${util.phpMergePostMultipart(req.parametersPost,req.parametersMult
 $postData = "${util.phpStr(req.postData)}";
 
 </#if>
-$req = curl_init("${util.phpStr(req.url)}");
+$req = curl_init("${util.phpStr(req.urlWithQuery)}");
 curl_setopt($req, CURLOPT_RETURNTRANSFER, true);
 <#if  req.parametersPost?? || req.parametersMultipart??>
 curl_setopt($req, CURLOPT_POSTFIELDS, $paramsPost);

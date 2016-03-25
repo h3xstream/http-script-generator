@@ -45,11 +45,6 @@ public class ZapHttpRequestMapper {
     private static HttpRequestInfo buildRequestInfo(HttpMessage httpMessage) throws IOException {
         String method = httpMessage.getRequestHeader().getMethod();
         URI url = httpMessage.getRequestHeader().getURI();
-        boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getScheme().equals("https")) || (url.getPort() == 80 && url.getScheme().equals("http"));
-
-        String urlWithoutQuery = url.getScheme()+ "://"+url.getHost()+ //
-                (isDefaultPort ? "": ":"+url.getPort())+ //
-                url.getPath();
 
         Map<String,String> paramsGet = new HashMap<String,String>();
         for(HtmlParameter param : httpMessage.getUrlParams()) {
@@ -101,7 +96,7 @@ public class ZapHttpRequestMapper {
             }
         }
 
-        return new HttpRequestInfo(method,urlWithoutQuery,paramsGet,paramsPost,postData,headers,multiPartParameters);
+        return new HttpRequestInfo(method,url.toString(),paramsGet,paramsPost,postData,headers,multiPartParameters);
     }
 
     /**

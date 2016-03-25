@@ -20,6 +20,7 @@ public class HttpRequestInfo implements Cloneable {
 
     private String method;
     private String url;
+    private String urlWithQuery;
     private String hostname;
     private String queryString;
     private Map<String, String> parametersGet;
@@ -35,9 +36,14 @@ public class HttpRequestInfo implements Cloneable {
                            Map<String, String> parametersPost, String postData, Map<String, String> headers,
                            List<MultiPartParameter> parametersMultipart) {
         this.method = method;
-        this.url = url;
         try {
-            URL u = new URL(this.url);
+            URL u = new URL(url);
+            boolean isDefaultPort = u.getPort() == -1 || (u.getPort() == 443 && u.getProtocol().equals("https")) || (u.getPort() == 80 && u.getProtocol().equals("http"));
+
+            this.urlWithQuery = url; //Complete url
+            this.url = u.getProtocol() + "://" + u.getHost() + //
+                    (isDefaultPort ? "" : ":" + u.getPort()) + //
+                    u.getPath();
             this.hostname = u.getHost();
             this.queryString = u.getPath();
         } catch (MalformedURLException e) {
@@ -78,7 +84,7 @@ public class HttpRequestInfo implements Cloneable {
             if(entry.getKey().toLowerCase().equals("cookie")) {
                 String[] cookiesFound = entry.getValue().split(";");
                 for(String cook : cookiesFound) {
-                    String[] cookieParts = cook.split("=");
+                    String[] cookieParts = cook.split("=",2);
                     cookies.put(cookieParts[0].trim(),cookieParts[1].trim());
                 }
                 it.remove();
@@ -119,6 +125,10 @@ public class HttpRequestInfo implements Cloneable {
 
     public String getUrl() {
         return url;
+    }
+
+    public String getUrlWithQuery() {
+        return urlWithQuery;
     }
 
     public String getHostname() {

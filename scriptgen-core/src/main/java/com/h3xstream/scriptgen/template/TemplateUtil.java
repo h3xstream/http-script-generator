@@ -168,7 +168,7 @@ public class TemplateUtil {
         StringBuilder str = new StringBuilder();
         int i=0;
         for(Map.Entry<String,String> e : cookies.entrySet()) {
-            str.append((i++!=0?"; ":"")+e.getKey()+"="+e.getValue());
+            str.append((i++!=0?"; ":"")+phpStr(e.getKey())+"="+phpStr(e.getValue()));
         }
         return str.toString();
     }

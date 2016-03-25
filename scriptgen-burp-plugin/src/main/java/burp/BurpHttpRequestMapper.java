@@ -31,12 +31,6 @@ public class BurpHttpRequestMapper {
         IRequestInfo requestInfo = helpers.analyzeRequest(req.getHttpService(), requestBytes);
 
         URL url = requestInfo.getUrl();
-        boolean isDefaultPort = url.getPort() == -1 || (url.getPort() == 443 && url.getProtocol().equals("https")) || (url.getPort() == 80 && url.getProtocol().equals("http"));
-
-        String urlWithoutQuery = url.getProtocol() + "://" + url.getHost() + //
-                (isDefaultPort ? "" : ":" + url.getPort()) + //
-                url.getPath();
-
 
         //Headers
         boolean isMultipart = false;
@@ -64,6 +58,7 @@ public class BurpHttpRequestMapper {
         Map<String, String> paramsPost = new HashMap<String, String>();
         List<MultiPartParameter> multiPartParameters = new ArrayList<MultiPartParameter>();
 
+        boolean hasJsonBody = false;
         Iterator<IParameter> iterator = requestInfo.getParameters().iterator();
         while(iterator.hasNext()) {
             IParameter param = iterator.next();
@@ -83,6 +78,9 @@ public class BurpHttpRequestMapper {
                     multiPartParameters.add(new MultiPartParameter(paramBody.getName(),paramBody.getValue(),
                             guessContentType(param.getValue()),param.getValue()));
                 }
+                else  if (param.getType() == IParameter.PARAM_JSON) {
+                    hasJsonBody = true;
+                }
             } catch (UnsupportedEncodingException e) {
                 Log.error("Error while building request entity for '"+url.toString()+"': "+e.getMessage());
                 throw new RuntimeException(e);
@@ -93,12 +91,15 @@ public class BurpHttpRequestMapper {
         byte[] requestBodyBytes = new byte[requestBytes.length - requestInfo.getBodyOffset()];
         System.arraycopy(requestBytes, requestInfo.getBodyOffset(), requestBodyBytes, 0, requestBytes.length - requestInfo.getBodyOffset());
         String requestBodyString = new String(requestBodyBytes);
-        if (requestBodyString.indexOf("=") == -1) {
+        if (requestBodyString.indexOf("=") == -1 && paramsPost.size() > 0) { //Not a POST request
             //In the case of RAW body (json, binary, etc.)
             paramsPost = new HashMap<String, String>();
             if("".equals(requestBodyString)) {
                 requestBodyString = null;
             }
+        }
+        else if(hasJsonBody) { //JSON body
+            //requestBodyString is kept as-is
         }
         else {
             requestBodyString = null;
@@ -106,7 +107,7 @@ public class BurpHttpRequestMapper {
 
 
 
-        return new HttpRequestInfo(requestInfo.getMethod(), urlWithoutQuery, paramsGet, paramsPost, requestBodyString,
+        return new HttpRequestInfo(requestInfo.getMethod(), url.toString(), paramsGet, paramsPost, requestBodyString,
                 headers,multiPartParameters);
     }
 

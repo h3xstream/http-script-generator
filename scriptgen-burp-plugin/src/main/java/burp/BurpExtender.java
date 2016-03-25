@@ -9,20 +9,28 @@ import com.h3xstream.scriptgen.ReissueRequestScripter;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class BurpExtender implements IBurpExtender, IContextMenuFactory {
 
-    private IBurpExtenderCallbacks callbacks;
     private IExtensionHelpers helpers;
 
 
     @Override
     public void registerExtenderCallbacks(final IBurpExtenderCallbacks callbacks) {
-        this.callbacks = callbacks;
         this.helpers = callbacks.getHelpers();
+
+        PrintWriter stdout = new PrintWriter(callbacks.getStdout(), true);
+        stdout.println("== Reissue Request Scripter plugin ==");
+        stdout.println("Passive scan rules to detect vulnerable Javascript libraries");
+        stdout.println(" - Github : https://github.com/h3xstream/http-script-generator");
+        stdout.println("");
+        stdout.println("== License ==");
+        stdout.println("Reissue Request Scripter Burp plugin is release under LGPL.");
+        stdout.println("");
 
         Log.setLogger(new Log.Logger() {
             @Override
@@ -64,7 +72,6 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //JOptionPane.showMessageDialog(null, "Testing...");
 
             try {
                 List<HttpRequestInfo> req = BurpHttpRequestMapper.buildListRequestInfo(requestSelected, helpers);
