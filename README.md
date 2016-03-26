@@ -8,11 +8,11 @@ This software is release under [LGPL](http://www.gnu.org/licenses/lgpl.html).
 
 ## Downloads
 
-(Last updated : May 31, 2015)
+(Last updated : March 26, 2016)
 
-ZAP plugin : [Download](https://github.com/h3xstream/http-script-generator/blob/gh-pages/releases/zap/scriptgen-alpha-4.zap?raw=true)
+ZAP plugin : [Download](https://github.com/h3xstream/http-script-generator/blob/gh-pages/releases/zap/scriptgen-alpha-5.zap?raw=true)
 
-Burp Suite Pro plugin : [Download](https://github.com/h3xstream/http-script-generator/blob/gh-pages/releases/burp/scriptgen-burp-plugin-4.jar?raw=true)
+Burp Suite Pro plugin : [Download](https://github.com/h3xstream/http-script-generator/blob/gh-pages/releases/burp/scriptgen-burp-plugin-5.jar?raw=true)
 
 ## Contributors
 

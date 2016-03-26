@@ -32,6 +32,8 @@ request = Net::HTTP::${req.method?capitalize}<#if req.parametersMultipart??>::Mu
 <#list req.headers?keys as h>
 request["${util.rubyStr(h)}"] = "${util.rubyStr(req.headers[h])}"
 </#list>
+</#if>
+<#if req.cookies??>
 request["Cookie"] = "${util.phpCookies(req.cookies)}"
 </#if>
 <#if req.parametersPost?? && !req.parametersMultipart??>
