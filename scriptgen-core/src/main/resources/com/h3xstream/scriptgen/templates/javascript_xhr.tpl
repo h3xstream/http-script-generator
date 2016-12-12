@@ -6,7 +6,7 @@ var params = "${util.jsUrlParam(req.parametersPost)}";
 <#if req.postData??>
 var params = "${util.jsStr(req.postData)}";
 </#if>
-http.open("${req.method?upper_case}", "${util.jsStr(req.queryString)}<#if req.parametersGet??>?${util.jsUrlParam(req.parametersGet)}</#if>", true);
+http.open("${util.jsStr(req.method?upper_case)}", "${util.jsStr(req.queryString)}<#if req.parametersGet??>?${util.jsUrlParam(req.parametersGet)}</#if>", true);
 
 <#if req.postData??>
 http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");

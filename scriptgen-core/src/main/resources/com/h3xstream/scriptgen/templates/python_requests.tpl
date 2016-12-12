@@ -16,8 +16,12 @@ session = requests.Session()
 <#if req.parametersGet??>
 paramsGet = ${util.pythonDict(req.parametersGet)}
 </#if>
-<#if req.parametersPost??>
+<#if req.parametersPost?? && !util.hasSpecialCharsPyRequest(req.parametersPost)>
 paramsPost = ${util.pythonDict(req.parametersPost)}
+</#if>
+<#if util.hasSpecialCharsPyRequest(req.parametersPost)>
+paramsPostDict = ${util.pythonDict(req.parametersPost)}
+paramsPost = "&".join("%s=%s" % (k,v) for k,v in paramsPostDict.items()) #Manually concatenated to avoid some encoded characters
 </#if>
 <#if req.parametersMultipart??>
 paramsMultipart = ${util.pythonDictMultipart(req.parametersMultipart)}
@@ -31,7 +35,7 @@ headers = ${util.pythonDict(req.headers)}
 <#if req.cookies??>
 cookies = ${util.pythonDict(req.cookies)}
 </#if>
-response = session.${req.method?lower_case}("${util.pythonStr(req.url)}"<#if req.parametersPost??>, data=paramsPost</#if><#if req.parametersMultipart??>, files=paramsMultipart</#if><#if req.postData??>, data=rawBody</#if><#if req.parametersGet??>, params=paramsGet</#if><#if req.headers??>, headers=headers</#if><#if req.cookies??>, cookies=cookies</#if><#if req.basicAuth??>, auth=HTTPBasicAuth("${util.pythonStr(req.basicAuth.username)}","${util.pythonStr(req.basicAuth.password)}")</#if><#if settings.proxy>, proxies=proxies</#if><#if req.ssl && settings.disableSsl>, verify=False</#if>)
+response = session.${util.alphaOnly(req.method?lower_case)}("${util.pythonStr(req.url)}"<#if req.parametersPost??>, data=paramsPost</#if><#if req.parametersMultipart??>, files=paramsMultipart</#if><#if req.postData??>, data=rawBody</#if><#if req.parametersGet??>, params=paramsGet</#if><#if req.headers??>, headers=headers</#if><#if req.cookies??>, cookies=cookies</#if><#if req.basicAuth??>, auth=HTTPBasicAuth("${util.pythonStr(req.basicAuth.username)}","${util.pythonStr(req.basicAuth.password)}")</#if><#if settings.proxy>, proxies=proxies</#if><#if req.ssl && settings.disableSsl>, verify=False</#if>)
 
 print("Status code:   %i" % response.status_code)
 print("Response body: %s" % response.content)

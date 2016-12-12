@@ -1,5 +1,5 @@
 <#list requests as req>
-<form name="csrf_poc" action="${util.jsStr(req.url)}<#if req.parametersGet?? && req.parametersPost??>?${util.jsUrlParam(req.parametersGet)}</#if>" method="${req.method?upper_case}">
+<form name="csrf_poc" action="${util.xmlStr(req.url)}<#if req.parametersGet?? && req.parametersPost??>?${util.jsUrlParam(req.parametersGet)}</#if>" method="${util.xmlStr(req.method?upper_case)}">
 <#if req.parametersPost??>
 <#list req.parametersPost?keys as p>
 <input type="hidden" name="${util.jsStr(p)}" value="${util.jsStr(req.parametersPost[p])}">

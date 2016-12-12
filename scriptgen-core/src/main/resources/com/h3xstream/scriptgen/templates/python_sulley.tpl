@@ -2,11 +2,11 @@ from sulley import *
 from urllib import quote
 
 <#list requests as req>
-s_initialize("HTTP request to ${req.url}")
+s_initialize("HTTP request to ${util.pythonStr(req.url)}")
 
 #Query string
-s_static("${req.method?upper_case} ")
-s_string("${req.queryString}")
+s_static("${util.pythonStr(req.method?upper_case)} ")
+s_string("${util.pythonStr(req.queryString)}")
 <#if req.parametersGet??>
 s_delim("?")
 <#list (req.parametersGet)?keys as param_name>

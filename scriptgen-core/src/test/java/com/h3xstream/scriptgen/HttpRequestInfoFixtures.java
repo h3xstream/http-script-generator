@@ -19,6 +19,7 @@ public class HttpRequestInfoFixtures {
     static {
         postParams.put("username", "admin");
         postParams.put("password", "admin'--**\n\\");
+        postParams.put("bug18[test]", "abcdef"); //Use to test fallback with Python Requests
     }
     static List<MultiPartParameter> multipartParams = new ArrayList<MultiPartParameter>();
     static {
@@ -42,5 +43,9 @@ public class HttpRequestInfoFixtures {
 
     public static HttpRequestInfo getPostMultiPartRequest() {
         return new HttpRequestInfo("POST", "http://httpbin.org/post?test=1", getParams, null, null, headers, multipartParams);
+    }
+
+    public static HttpRequestInfo getBrokenRequest() {
+        return new HttpRequestInfo("SPECIAL\"')(\\", "http://httpbin.org/broken?test=1\"')(aaaaaaaa\\", getParams, null, null, headers, multipartParams);
     }
 }

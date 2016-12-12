@@ -9,7 +9,7 @@ require "net/http/post/multipart"
 </#if>
 
 <#list requests as req>
-uri = URI.parse("${req.url}")
+uri = URI.parse("${util.rubyStr(req.url)}")
 <#if req.parametersGet??>
 uri.query = URI.encode_www_form(${util.rubyMap(req.parametersGet)})
 </#if>
@@ -27,7 +27,7 @@ multipartParams = {${util.rubyDictMultipart(req.parametersMultipart)}}
 multipartParams = multipartParams.merge(${util.rubyMap(req.parametersPost)})
 </#if>
 </#if>
-request = Net::HTTP::${req.method?capitalize}<#if req.parametersMultipart??>::Multipart</#if>.new(uri.request_uri<#if req.parametersMultipart??>, multipartParams</#if>)
+request = Net::HTTP::${util.alphaOnly(req.method)?capitalize}<#if req.parametersMultipart??>::Multipart</#if>.new(uri.request_uri<#if req.parametersMultipart??>, multipartParams</#if>)
 <#if req.headers??>
 <#list req.headers?keys as h>
 request["${util.rubyStr(h)}"] = "${util.rubyStr(req.headers[h])}"
@@ -47,7 +47,7 @@ request.basic_auth("${util.rubyStr(req.basicAuth.username)}","${util.rubyStr(req
 </#if>
 <#if settings.proxy>
 
-Net::HTTP::Proxy('127.0.0.1', 8080).start("${req.hostname}"<#if req.ssl>, :use_ssl => true<#if settings.disableSsl>, :verify_mode => OpenSSL::SSL::VERIFY_NONE</#if></#if>) {|http|
+Net::HTTP::Proxy('127.0.0.1', 8080).start("${util.rubyStr(req.hostname)}"<#if req.ssl>, :use_ssl => true<#if settings.disableSsl>, :verify_mode => OpenSSL::SSL::VERIFY_NONE</#if></#if>) {|http|
 </#if>
 response = http.request(request)
 

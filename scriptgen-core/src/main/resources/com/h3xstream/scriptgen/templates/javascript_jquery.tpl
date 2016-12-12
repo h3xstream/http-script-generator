@@ -7,7 +7,7 @@
 <#list requests as req>
 $.ajax({
     url: "${util.jsStr(req.queryString)}<#if req.parametersGet?? && req.parametersPost??>?${util.jsUrlParam(req.parametersGet)}</#if>",
-    type: "${req.method?lower_case}",
+    type: "${util.jsStr(req.method?lower_case)}",
     data:
         <#if req.parametersPost??>
         ${util.jsMap(req.parametersPost)}

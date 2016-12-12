@@ -10,7 +10,19 @@ import java.util.Map;
 
 public class TemplateUtil {
 
+    /**
+     * The following characters don't need to be URL encoded
+     */
     private static List<Character> CHAR_NO_URL_ENCODE = Arrays.asList('_','-','*');
+
+    /**
+     * The following characters will be encoded by Python Requests. The character might not be decoded transparently by
+     * the server.
+     * Square bracket can be interpreted by the server as array type (test[]=1&test[]=2) or as key identifier (foo[bar]=123).
+     * If special characters such as square bracket are found, it will fall back to raw body. (a single string parameter)
+     * https://github.com/h3xstream/http-script-generator/issues/18
+     */
+    private static List<Character> CHAR_FALL_BACK_RAW_PY_REQUESTS = Arrays.asList('[',']');
 
     private String buildMap(Map<String,String> map,String start,String end,String keyValueSeparator, String entrySeparator) {
         StringBuilder buffer = new StringBuilder(start);
@@ -204,6 +216,7 @@ public class TemplateUtil {
 
     //JavaScript
 
+
     public String jsStr(String value) {
         return genericString(value);
     }
@@ -241,6 +254,33 @@ public class TemplateUtil {
         return buildMap(map,"{","}","\":\"",",");
     }
 
+    //XML
+
+    public String xmlStr(String value) {
+        return XmlUtil.escapeValue(value);
+    }
+
+    //Special filter
+
+    public String alphaOnly(String value) {
+        if(value.matches("^[a-zA-Z]+$"))
+            return value;
+        else
+            return "GET"; //Safe fall back (Should not happen)
+    }
+
+    public boolean hasSpecialCharsPyRequest(Map<String,String> map) {
+        if(map == null) return false;
+
+        for(Map.Entry<String,String> e : map.entrySet()) {
+            for(Character ch : CHAR_FALL_BACK_RAW_PY_REQUESTS) {
+                if (e.getKey().indexOf(ch) != -1) {
+                    return true; //Special character found
+                }
+            }
+        }
+        return false;
+    }
 
     //Detect conditions on list of requests
 

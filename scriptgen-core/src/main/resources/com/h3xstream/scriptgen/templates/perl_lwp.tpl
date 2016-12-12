@@ -5,7 +5,7 @@ use HTTP::Cookies;
 </#if>
 
 <#list requests as req>
-my $url = URI->new("${req.url}");
+my $url = URI->new("${util.perlStr(req.url)}");
 <#if req.parametersGet??>
 $url->query_form(${util.perlMap(req.parametersGet)});
 </#if>
@@ -37,7 +37,7 @@ my $req = POST $url, Content_Type=>'form-data', Content=> @multipartParams;
 <#elseif req.parametersPost??>
 my $req = POST $url<#if req.parametersPost??>, ${util.perlMap(req.parametersPost)}</#if>;
 <#else>
-my $req = ${req.method?upper_case} $url;
+my $req = ${util.perlStr(req.method?upper_case)} $url;
 </#if>
 <#if req.headers??>
 <#list req.headers?keys as h>

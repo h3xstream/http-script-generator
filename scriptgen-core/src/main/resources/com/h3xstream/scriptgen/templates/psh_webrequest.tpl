@@ -33,7 +33,7 @@ $session = New-Object Microsoft.PowerShell.Commands.WebRequestSession
 $session.Cookies = $cc
 
 </#if>
-$response = Invoke-WebRequest -Method "${req.method}" -Uri "${req.url}"<#if req.headers??> -Headers $headers</#if><#if req.cookies??> -WebSession $session</#if><#if req.parametersPost??> -Body $paramsPost</#if><#if req.parametersGet??> -Body $paramsGet</#if><#if settings.proxy> -Proxy 'http://127.0.0.1:8080'</#if>
+$response = Invoke-WebRequest -Method "${util.powershellStr(req.method)}" -Uri "${util.powershellStr(req.url)}"<#if req.headers??> -Headers $headers</#if><#if req.cookies??> -WebSession $session</#if><#if req.parametersPost??> -Body $paramsPost</#if><#if req.parametersGet??> -Body $paramsGet</#if><#if settings.proxy> -Proxy 'http://127.0.0.1:8080'</#if>
 
 Write-Host "Status code: $($response.StatusCode)" 
 Write-host "Response body: $($response.Content)"
