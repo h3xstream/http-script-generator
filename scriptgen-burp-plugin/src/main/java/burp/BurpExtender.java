@@ -25,7 +25,7 @@ public class BurpExtender implements IBurpExtender, IContextMenuFactory {
 
         PrintWriter stdout = new PrintWriter(callbacks.getStdout(), true);
         stdout.println("== Reissue Request Scripter plugin ==");
-        stdout.println("Passive scan rules to detect vulnerable Javascript libraries");
+        stdout.println("Plugin that generate script to reproduce a specific HTTP request.");
         stdout.println(" - Github : https://github.com/h3xstream/http-script-generator");
         stdout.println("");
         stdout.println("== License ==");
