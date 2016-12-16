@@ -46,6 +46,6 @@ public class HttpRequestInfoFixtures {
     }
 
     public static HttpRequestInfo getBrokenRequest() {
-        return new HttpRequestInfo("SPECIAL\"')(\\", "http://httpbin.org/broken?test=1\"')(aaaaaaaa\\", getParams, null, null, headers, multipartParams);
+        return new HttpRequestInfo("SPECIAL\"')(\\", "http://httpbin.org/brokentest=1${php}#{ruby}\"')(aaaaaaaa\\", getParams, null, null, headers, multipartParams);
     }
 }

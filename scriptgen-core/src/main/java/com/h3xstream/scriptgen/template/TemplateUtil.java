@@ -60,6 +60,9 @@ public class TemplateUtil {
             else if(ch == '\\') {
                 buffer.append("\\\\");
             }
+            else if(ch == '$' || ch == '#') {
+                buffer.append("\\x"+String.format("%02x",Math.abs((int) ch)));
+            }
             else if( 32 <= ch && ch <= 126) { //Digits, alpha and most specials
                 buffer.append(ch);
             }
