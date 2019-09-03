@@ -1,7 +1,8 @@
 language: java
 #install: mvn install:install-file -Dfile=libs/zap-2.4.3.jar -DgroupId=org.zaproxy -DartifactId=zaproxy -Dversion=2.4.3 -Dpackaging=jar
 jdk:
-  - oraclejdk7
+  - openjdk8
+  - openjdk9
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
