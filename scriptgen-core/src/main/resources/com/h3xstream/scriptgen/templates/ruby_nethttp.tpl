@@ -1,8 +1,4 @@
-require "net/http"
-require "uri"
-<#if util.atLeastOneSsl(requests)>
-require "openssl"
-</#if>
+require 'net/http'
 <#if util.atLeastOneMultipart(requests)>
 require "net/http/post/multipart"
 # Psst! It require an additional gem : gem install multipart-post
@@ -43,7 +39,7 @@ request.set_form_data(${util.rubyMap(req.parametersPost)})
 request.body = "${util.rubyStr(req.postData)}"
 </#if>
 <#if req.basicAuth??>
-request.basic_auth("${util.rubyStr(req.basicAuth.username)}","${util.rubyStr(req.basicAuth.password)}")
+request.basic_auth("${util.rubyStr(req.basicAuth.username)}", "${util.rubyStr(req.basicAuth.password)}")
 </#if>
 <#if settings.proxy>
 
@@ -51,8 +47,8 @@ Net::HTTP::Proxy('127.0.0.1', 8080).start("${util.rubyStr(req.hostname)}"<#if re
 </#if>
 response = http.request(request)
 
-puts "Status code: "+response.code
-puts "Response body: "+response.body
+puts "Status code: " + response.code
+puts "Response body: " + response.body
 <#if settings.proxy>
 }
 </#if>
